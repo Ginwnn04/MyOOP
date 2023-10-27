@@ -1,6 +1,6 @@
-package DoAnOOP.Manager;
+package MyOOP.Manager;
 
-import DoAnOOP.Entity.Product;
+import MyOOP.Entity.Product;
 
 public class ListProduct {
     private int totalProduct;
