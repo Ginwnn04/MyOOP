@@ -25,8 +25,6 @@ public class PromotionsSale {
     }
 
     public String creatVoucher() {
-        String startDate = new Validate().checkStringUser("Nhập vào ngày bắt đầu giảm giá");
-        String endDate = new Validate().checkStringUser("Nhập vào ngày kết thúc giảm giá");
         long discount = new Validate().checkMoneyInput("Nhập vào số tiền giảm giá");
         if (discount == -1) {
             return null;

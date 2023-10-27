@@ -16,5 +16,6 @@ public class ListProduct {
 
     public Product[] getListProduct() {
         // Get danh sach san pham
+        return null;
     }
 }
