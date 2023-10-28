@@ -19,9 +19,11 @@ public class ImportProduct {
     }
 
     public boolean insertProduct() {
-        String path = new Validate().checkStringUser("Nhập đường dẫn file");
+
+        String pathSupplier = System.getProperty("user.dir") + "\\src\\MyOOP\\NhaCungCap.txt";
+
         try {
-            FileReader fileReader = new FileReader(path);
+            FileReader fileReader = new FileReader(pathSupplier);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
             while ((line = bufferedReader.readLine()) != null) {
@@ -37,6 +39,7 @@ public class ImportProduct {
                     listDetailsImport[totalImportProduct++] = new DetailsImport(type, idImportProduct, nameProduct, unit, quantity, priceImport);
                 }
             }
+            bufferedReader.close();
         }
         catch (FileNotFoundException fnfe) {
 
@@ -47,16 +50,40 @@ public class ImportProduct {
         return true;
     }
 
+    public boolean updateWareHouse() {
+        // Kiem tra nhung sp nao co so luong = 0 thi an? di
+        for(DetailsImport x : listDetailsImport) {
+            if (x.getQuantity() == 0) {
+                x.setIsDelete(true);
+            }
+        }
+
+        String pathWareHouse = System.getProperty("user.dir") + "\\src\\MyOOP\\Kho.txt";
+        try {
+            FileWriter fileWriter = new FileWriter(pathWareHouse);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            for(DetailsImport x : listDetailsImport) {
+                if (x.getIsDelete() == false) {
+                    bufferedWriter.write(x.getIdProduct() + "|" + x.getNameProduct() + "|" + x.getUnit() + "|" + x.getQuantity() + "|" + x.getImportPrice() + "\n");
+                }
+            }
+            bufferedWriter.close();
+        }
+        catch (FileNotFoundException fnfe) {
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return true;
+    }
     public String generateIdImportBill() {
         return  (int)(Math.random() * 1000000000) + "";
     }
 
     public void printImportBill() {
-        String nameEmployee = "Nguyễn Nhật Quang";
-        System.out.printf("\t\t\t\t Bill nhập hàng\n");
-        System.out.println("\t\t\t\t " + idImportProduct);
-        System.out.printf("%-" + 25 + "s %-"
-                + 25 + "s\n", nameEmployee, "25/10/2023");
+        String idEmployee = "1234567890";
+        System.out.printf("%" + 60 + "s", "BILL NHẬP HÀNG (" + idImportProduct + ")\n");
+        System.out.printf("%" + 30 + "s %" + 30 + "s\n", "Mã NV: " + idEmployee, "Ngày: " + importDate);
         int colSpace = 15;
         System.out.printf("%-" + colSpace + "s %-"
                 + colSpace + "s %-"

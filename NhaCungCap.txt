@@ -1,0 +1,5 @@
+2|C2 Trà Đào|Chai|22|7000
+1|Thịt heo|Kg|31|150000
+1|Trứng gà|Vỉ|11|23000
+2|Sting dâu|Chai|34|9000
+2|Trà xanh|Chai|9|9000
