@@ -1,4 +1,4 @@
-package DoAnOOP.Entity;
+package MyOOP.Entity;
 
 public class DetailsCart {
     private String nameProduct;

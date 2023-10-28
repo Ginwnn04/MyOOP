@@ -1,4 +1,4 @@
-package DoAnOOP.Entity;
+package MyOOP.Entity;
 public class Voucher {
     private String idVoucher;
     private long moneyOff;

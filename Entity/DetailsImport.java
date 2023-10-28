@@ -1,4 +1,4 @@
-package DoAnOOP.Entity;
+package MyOOP.Entity;
 
 public class DetailsImport {
     private String idBillImport;

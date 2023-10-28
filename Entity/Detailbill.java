@@ -1,4 +1,4 @@
-package DoAnOOP.Entity;
+package MyOOP.Entity;
 public class Detailbill {
     String idBill;
     String idProduct;

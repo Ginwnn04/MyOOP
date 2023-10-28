@@ -1,6 +1,6 @@
-package DoAnOOP.Entity;
+package MyOOP.Entity;
 
-import DoAnOOP.Manager.Validate;
+import MyOOP.Manager.Validate;
 
 import java.io.*;
 import java.util.Arrays;

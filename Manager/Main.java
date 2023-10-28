@@ -1,7 +1,7 @@
-package DoAnOOP.Manager;
+package MyOOP.Manager;
 
 
-import DoAnOOP.Entity.ImportProduct;
+import MyOOP.Entity.ImportProduct;
 
 public class Main {
     public static void main(String[] args) {
