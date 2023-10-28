@@ -2,14 +2,14 @@ package MyOOP.Entity;
 
 public class Foods extends Product{
     private String typeFood;
-    private float amount;
+    private int amount;
 
     public Foods() {
         super();
     }
 
-    public Foods(String idProduct, String nameProduct, String unit, int quantity, String importDate, String productDate, int price, String typeFood, float amount) {
-        super(idProduct, nameProduct, unit, quantity, importDate, productDate, price);
+    public Foods(String idProduct, String nameProduct, String unit, int quantity, int price, String typeFood, int amount) {
+        super(idProduct, nameProduct, unit, quantity, price);
         this.typeFood = typeFood;
         this.amount = amount;
     }
@@ -22,8 +22,8 @@ public class Foods extends Product{
                 + colSpace + "s %-"
                 + colSpace + "s %-"
                 + colSpace + "s %-"
-                + colSpace + "d %-"
                 + colSpace + "s %-"
-                + colSpace + "d\n", ID, nameProduct, amount + " gram" ,typeFood , unit, quantity, productDate, price);
+                + colSpace + "d %-"
+                + colSpace + "d\n", ID, nameProduct, amount + " gram", "-" ,typeFood , unit, quantity, price);
     }
 }

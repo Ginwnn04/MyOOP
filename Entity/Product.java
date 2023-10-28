@@ -5,8 +5,6 @@ public abstract class Product {
     String nameProduct;
     String unit;
     int quantity;
-    String importDate;
-    String productDate;
     int price;
     boolean isDelete;
 
@@ -16,18 +14,14 @@ public abstract class Product {
         this.price = 0;
         this.unit = "";
         this.quantity = 0;
-        this.importDate = "";
-        this.productDate = "";
         this.isDelete = true;
     }
 
-    public Product(String ID, String nameProduct, String unit, int quantity, String importDate, String productDate, int price) {
+    public Product(String ID, String nameProduct, String unit, int quantity, int price) {
         this.ID = ID;
         this.nameProduct = nameProduct;
         this.unit = unit;
         this.quantity = quantity;
-        this.importDate = importDate;
-        this.productDate = productDate;
         this.price = price;
         this.isDelete = false;
     }

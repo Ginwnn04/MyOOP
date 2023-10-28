@@ -7,8 +7,8 @@ public class Drinks extends Product{
         super();
     }
 
-    public Drinks(String idProduct, String nameProduct, String unit, int quantity, String importDate, String productDate, int price,  int volume) {
-        super(idProduct, nameProduct, unit, quantity, importDate, productDate, price);
+    public Drinks(String idProduct, String nameProduct, String unit, int quantity, int price,  int volume) {
+        super(idProduct, nameProduct, unit, quantity, price);
         this.volume = volume;
     }
 
@@ -18,10 +18,11 @@ public class Drinks extends Product{
         System.out.printf("%-" + colSpace + "s %-"
                 + colSpace + "s %-"
                 + colSpace + "s %-"
+                + colSpace + "d %-"
                 + colSpace + "s %-"
                 + colSpace + "s %-"
-                + colSpace + "s %-"
-                + colSpace + "d\n", ID, nameProduct, volume + " ml" , unit, quantity, productDate, price);
+                + colSpace + "d %-"
+                + colSpace + "d\n", ID, nameProduct, "-", volume ,"-" , unit, quantity, price);
     }
 
 

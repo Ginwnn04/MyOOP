@@ -14,7 +14,9 @@ public class ImportProduct {
     private long totalPriceImportProduct;
     private DetailsImport[] listDetailsImport;
 
-    public ImportProduct() {
+    public ImportProduct(String importDate) {
+        this.importDate = importDate;
+        idImportProduct = generateIdImportBill();
         listDetailsImport = new DetailsImport[totalImportProduct];
     }
 
@@ -30,7 +32,6 @@ public class ImportProduct {
                 String[] split = line.split("\\|");
                 int type = Integer.parseInt(split[0]);
                 if (type == 1 || type == 2) {
-                    idImportProduct = generateIdImportBill();
                     String nameProduct = split[1];
                     String unit = split[2];
                     int quantity = Integer.parseInt(split[3]);
@@ -47,6 +48,23 @@ public class ImportProduct {
             throw new RuntimeException(e);
         }
 
+        return true;
+    }
+
+    public boolean insertProductFormKeyboard() {
+        System.out.println("1. Thực phẩm");
+        System.out.println("2. Thức uống");
+        String type = new Validate().checkStringUser("Nhập loại sản phẩm");
+        String nameProduct = new Validate().checkStringUser("Nhập tên sản phẩm");
+//        new Validate().clearBuffer();
+        String unit = new Validate().checkStringUser("Nhập đơn vị tính của sản phẩm");
+        long quantity = new Validate().checkNumberProduct("Nhập số lượng sản phẩm");
+        long priceProduct = new Validate().checkNumberProduct("Nhập số tiền nhập sản phẩm");
+        if (quantity == -1 || priceProduct == -1) {
+            return false;
+        }
+        listDetailsImport = Arrays.copyOf(listDetailsImport, totalImportProduct + 1);
+        listDetailsImport[totalImportProduct++] = new DetailsImport(Integer.parseInt(type), generateIdImportBill(), nameProduct, unit, (int)quantity, priceProduct);
         return true;
     }
 
