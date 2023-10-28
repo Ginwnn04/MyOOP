@@ -1,6 +1,6 @@
-package MyOOP.Manager;
+package DoAnOOP.Manager;
 
-import MyOOP.Entity.Voucher;
+import DoAnOOP.Entity.Voucher;
 
 import java.util.Arrays;
 

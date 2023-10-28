@@ -1,4 +1,4 @@
-package MyOOP.Entity;
+package DoAnOOP.Entity;
 
 public class Cart {
     private int totalDetail;

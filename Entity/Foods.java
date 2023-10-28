@@ -1,4 +1,4 @@
-package MyOOP.Entity;
+package DoAnOOP.Entity;
 
 public class Foods extends Product{
     private String typeFood;
@@ -8,8 +8,8 @@ public class Foods extends Product{
         super();
     }
 
-    public Foods(String nameProduct, String unit, int quantity, String importDate, String productDate, int price, String typeFood, float amount) {
-        super(1, nameProduct, unit, quantity, importDate, productDate, price);
+    public Foods(String idProduct, String nameProduct, String unit, int quantity, String importDate, String productDate, int price, String typeFood, float amount) {
+        super(idProduct, nameProduct, unit, quantity, importDate, productDate, price);
         this.typeFood = typeFood;
         this.amount = amount;
     }

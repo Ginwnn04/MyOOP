@@ -1,4 +1,4 @@
-package MyOOP.Entity;
+package DoAnOOP.Entity;
 public class Employee extends Account{
     private String idEmployee;
     private String fullName;

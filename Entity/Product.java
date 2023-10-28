@@ -1,4 +1,4 @@
-package MyOOP.Entity;
+package DoAnOOP.Entity;
 
 public abstract class Product {
     String ID;
@@ -21,8 +21,8 @@ public abstract class Product {
         this.isDelete = true;
     }
 
-    public Product(int type, String nameProduct, String unit, int quantity, String importDate, String productDate, int price) {
-        this.ID = generateIdProduct(type);
+    public Product(String ID, String nameProduct, String unit, int quantity, String importDate, String productDate, int price) {
+        this.ID = ID;
         this.nameProduct = nameProduct;
         this.unit = unit;
         this.quantity = quantity;
@@ -32,18 +32,7 @@ public abstract class Product {
         this.isDelete = false;
     }
 
-    public String generateIdProduct(int type) {
-        // 1 = Foods
-        // 2 = Drinks
-        String firstID = "";
-        if (type == 1) {
-            firstID = "FD";
-        }
-        else {
-            firstID = "DK";
-        }
-        return firstID + "-" + (int)(Math.random() * 100000000);
-    }
+
 
     public abstract void print();
 }

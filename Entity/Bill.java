@@ -1,4 +1,4 @@
-package MyOOP.Entity;
+package DoAnOOP.Entity;
 public class Bill {
     String idBill;
     String idEmployee;
