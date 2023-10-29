@@ -17,16 +17,48 @@ public abstract class Product {
         this.isDelete = true;
     }
 
-    public Product(String ID, String nameProduct, String unit, int quantity, int price) {
-        this.ID = ID;
+    public Product(int type, String nameProduct, String unit, int quantity, int price) {
+        this.ID = generateIdProduct(type);
         this.nameProduct = nameProduct;
         this.unit = unit;
         this.quantity = quantity;
         this.price = price;
         this.isDelete = false;
     }
+    public String generateIdProduct(int type) {
+        // 1 = Foods
+        // 2 = Drinks
+        String firstID = "";
+        if (type == 1) {
+            firstID = "FD";
+        }
+        else {
+            firstID = "DK";
+        }
+        return firstID + "-" + (int)(Math.random() * 100000000);
+    }
 
 
 
     public abstract void print();
+
+    public String getID() {
+        return ID;
+    }
+
+    public String getNameProduct() {
+        return nameProduct;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public int getPrice() {
+        return price;
+    }
 }

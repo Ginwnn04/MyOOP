@@ -8,76 +8,105 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 
+
 public class ListProduct {
     private int totalProduct;
     private Product[] listProduct;
+    ImportProduct billImport = new ImportProduct();
 
     public ListProduct() {
         listProduct = new Product[totalProduct];
     }
 
-    public boolean importProduct(int typeInput) {
-        String date = new Validate().checkStringUser("Nhập ngày nhập sản phẩm");
-        ImportProduct importProduct = new  ImportProduct(date);
-        if (typeInput == 1) {
-            importProduct.insertProduct();
-        }
-        else if(typeInput == 2) {
-            String choice;
-            do {
-                importProduct.insertProductFormKeyboard();
-                new Validate().clearBuffer();
-                choice = new Validate().checkStringUser("Bạn có muốn thêm tiếp sản phẩm (y/n)");
-            } while(choice.charAt(0) == 'y');
-        }
-        importProduct.updateWareHouse();
-        String path = System.getProperty("user.dir") + "\\src\\MyOOP\\Kho.txt";
+    public void importProduct() {
+        billImport.insertInfor();
+        String choice = "";
+        do {
+            System.out.printf("%" + 60 + "s\n", "THÊM SẢN PHẨM");
+            Product product = createProduct();
+            if (product != null) {
+                listProduct = Arrays.copyOf(listProduct, totalProduct + 1);
+                listProduct[totalProduct++] = product;
+                billImport.insertDetail(product.getID(), product.getNameProduct(), product.getUnit(), product.getQuantity(), product.getPrice());
+                System.out.println("Thêm thành công !");
+            }
+            System.out.printf("Thêm thất bại !");
+            choice = new Validate().checkStringUser("Bạn có muốn tiếp tục thêm sản phẩm không (y/n)");
+
+        } while (choice.charAt(0) == 'y');
+        billImport.printImportBill();
+    }
+
+    public void importProductFormFile() {
+        billImport.insertInfor();
+        String path = new Validate().checkStringUser("Nhập vào địa chỉ file");
+
         try {
             FileReader fileReader = new FileReader(path);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 String[] split = line.split("\\|");
-                String idProduct = split[0];
-                String nameProduct = split[1];
-                String unit = split[2];
-                int quantity = Integer.parseInt(split[3]);
-                int price = Integer.parseInt(split[4]);
-                listProduct = Arrays.copyOf(listProduct, totalProduct + 1);
-                String type = idProduct.substring(0,2);
-                System.out.println("Nhập thông tin sản phẩm thứ " + (totalProduct + 1));
-                if (type.equals("FD")) {
-                    // Food
-                    String typeFood = new Validate().checkStringUser("Nhập loại thực phẩm");
-                    int amout = new Validate().checkNumberProduct("Nhập vào khối lượng");
-                    listProduct[totalProduct++] = new Foods(idProduct, nameProduct, unit, quantity, price, typeFood, amout);
+                int type = Integer.parseInt(split[0]);
+                if (type == 1 || type == 2) {
+                    String nameProduct = split[1];
+                    String unit = split[2];
+                    int quantity = Integer.parseInt(split[3]);
+                    int priceImport = Integer.parseInt(split[4]);
+                    listProduct = Arrays.copyOf(listProduct, totalProduct + 1);
+                    if (type == 1) {
+                        String typeFood = split[5];
+                        int amout = Integer.parseInt(split[6]);
+                        listProduct[totalProduct++] = new Foods(type, nameProduct, unit, quantity, priceImport, typeFood, amout);
+                    }
+                    else {
+                        int volume = Integer.parseInt(split[5]);
+                        listProduct[totalProduct++] = new Drinks(type, nameProduct, unit, quantity, priceImport, volume);
+                    }
+                    Product product = listProduct[totalProduct - 1];
+                    billImport.insertDetail(product.getID(), product.getNameProduct(), product.getUnit(), product.getQuantity(), product.getPrice());
                 }
-                else {
-
-                    int volume = new Validate().checkNumberProduct("Nhập vào thể tích");
-                    listProduct[totalProduct++] = new Drinks(idProduct, nameProduct, unit, quantity, price, volume);
-                }
-                new Validate().clearBuffer();
             }
+            System.out.println("Đã thêm thành công " + totalProduct + " sản phẩm");
+            billImport.printImportBill();
             bufferedReader.close();
-            new Validate().clearBuffer();
-            String choice = new Validate().checkStringUser("Bạn có muốn in hoá đơn nhập không (y/n)");
-            if (choice.charAt(0) == 'y') {
-                importProduct.printImportBill();
 
-            }
-
-            return true;
         }
         catch (FileNotFoundException fnfe) {
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return false;
 
     }
 
+
+    public Product createProduct() {
+        System.out.println("1. Thực phẩm");
+        System.out.println("2. Thức uống");
+        int type = new Validate().checkNumberProduct("Nhập loại sản phẩm");
+        new Validate().clearBuffer();
+        String nameProduct = new Validate().checkStringUser("Nhập tên sản phẩm");
+        String unit = new Validate().checkStringUser("Nhập đơn vị tính của sản phẩm");
+        int quantity = new Validate().checkNumberProduct("Nhập số lượng sản phẩm");
+        int priceProduct = new Validate().checkNumberProduct("Nhập số tiền nhập sản phẩm");
+        if (quantity == -1 || priceProduct == -1) {
+            return null;
+        }
+        if (type == 1) {
+            new Validate().clearBuffer();
+            String typeFood = new Validate().checkStringUser("Nhập loại thực phẩm");
+            int amout = new Validate().checkNumberProduct("Nhập khối lượng thực phẩm");
+            if (amout != -1) {
+                return new Foods(type, nameProduct, unit, quantity, priceProduct, typeFood, amout);
+            }
+        }
+        else if (type == 2){
+            int volume = new Validate().checkNumberProduct("Nhập thể tích");
+            return new Drinks(type, nameProduct, unit, quantity, priceProduct, volume);
+        }
+        return null;
+    }
     public void displayProduct(int type) {
         String title = "";
         if (type == 1) {

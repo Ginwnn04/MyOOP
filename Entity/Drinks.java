@@ -7,8 +7,8 @@ public class Drinks extends Product{
         super();
     }
 
-    public Drinks(String idProduct, String nameProduct, String unit, int quantity, int price,  int volume) {
-        super(idProduct, nameProduct, unit, quantity, price);
+    public Drinks(int type, String nameProduct, String unit, int quantity, int price,  int volume) {
+        super(type, nameProduct, unit, quantity, price);
         this.volume = volume;
     }
 

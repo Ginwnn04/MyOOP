@@ -14,94 +14,42 @@ public class ImportProduct {
     private long totalPriceImportProduct;
     private DetailsImport[] listDetailsImport;
 
-    public ImportProduct(String importDate) {
+    public ImportProduct(String idSupplier, String idEmployee, String importDate) {
+        this.idSupplier = idSupplier;
+        this.idEmployee = idEmployee;
         this.importDate = importDate;
         idImportProduct = generateIdImportBill();
         listDetailsImport = new DetailsImport[totalImportProduct];
     }
 
-    public boolean insertProduct() {
+    public ImportProduct() {
+        idImportProduct = generateIdImportBill();
+        listDetailsImport = new DetailsImport[totalImportProduct];
 
-        String pathSupplier = System.getProperty("user.dir") + "\\src\\MyOOP\\NhaCungCap.txt";
-
-        try {
-            FileReader fileReader = new FileReader(pathSupplier);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                String[] split = line.split("\\|");
-                int type = Integer.parseInt(split[0]);
-                if (type == 1 || type == 2) {
-                    String nameProduct = split[1];
-                    String unit = split[2];
-                    int quantity = Integer.parseInt(split[3]);
-                    long priceImport = Long.parseLong(split[4]);
-                    listDetailsImport = Arrays.copyOf(listDetailsImport, totalImportProduct + 1);
-                    listDetailsImport[totalImportProduct++] = new DetailsImport(type, idImportProduct, nameProduct, unit, quantity, priceImport);
-                }
-            }
-            bufferedReader.close();
-        }
-        catch (FileNotFoundException fnfe) {
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        return true;
     }
 
-    public boolean insertProductFormKeyboard() {
-        System.out.println("1. Thực phẩm");
-        System.out.println("2. Thức uống");
-        String type = new Validate().checkStringUser("Nhập loại sản phẩm");
-        String nameProduct = new Validate().checkStringUser("Nhập tên sản phẩm");
-//        new Validate().clearBuffer();
-        String unit = new Validate().checkStringUser("Nhập đơn vị tính của sản phẩm");
-        long quantity = new Validate().checkNumberProduct("Nhập số lượng sản phẩm");
-        long priceProduct = new Validate().checkNumberProduct("Nhập số tiền nhập sản phẩm");
-        if (quantity == -1 || priceProduct == -1) {
-            return false;
-        }
+    public void insertInfor() {
+        this.idSupplier = new Validate().checkStringUser("Nhập ID nhà cung cấp");
+        this.idEmployee = new Validate().checkStringUser("Nhập ID nhân viên");
+        this.importDate = new Validate().checkStringUser("Nhập ngày nhập hàng");
+    }
+
+    public void insertDetail(String idProduct, String nameProduct, String unit, int quantity, int importPrice) {
         listDetailsImport = Arrays.copyOf(listDetailsImport, totalImportProduct + 1);
-        listDetailsImport[totalImportProduct++] = new DetailsImport(Integer.parseInt(type), generateIdImportBill(), nameProduct, unit, (int)quantity, priceProduct);
-        return true;
+        listDetailsImport[totalImportProduct++] = new DetailsImport(idImportProduct, idProduct, nameProduct, unit, quantity, importPrice);
     }
 
-    public boolean updateWareHouse() {
-        // Kiem tra nhung sp nao co so luong = 0 thi an? di
-        for(DetailsImport x : listDetailsImport) {
-            if (x.getQuantity() == 0) {
-                x.setIsDelete(true);
-            }
-        }
-
-        String pathWareHouse = System.getProperty("user.dir") + "\\src\\MyOOP\\Kho.txt";
-        try {
-            FileWriter fileWriter = new FileWriter(pathWareHouse);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            for(DetailsImport x : listDetailsImport) {
-                if (x.getIsDelete() == false) {
-                    bufferedWriter.write(x.getIdProduct() + "|" + x.getNameProduct() + "|" + x.getUnit() + "|" + x.getQuantity() + "|" + x.getImportPrice() + "\n");
-                }
-            }
-            bufferedWriter.close();
-        }
-        catch (FileNotFoundException fnfe) {
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return true;
-    }
     public String generateIdImportBill() {
         return  (int)(Math.random() * 1000000000) + "";
     }
 
     public void printImportBill() {
-        String idEmployee = "1234567890";
+        String choice = new Validate().checkStringUser("Bạn có muốn in hoá đơn nhập (y/n)");
+        if (choice.charAt(0) == 'n') {
+            return;
+        }
         System.out.printf("%" + 60 + "s", "BILL NHẬP HÀNG (" + idImportProduct + ")\n");
-        System.out.printf("%" + 30 + "s %" + 30 + "s\n", "Mã NV: " + idEmployee, "Ngày: " + importDate);
+        System.out.printf("%" + 30 + "s %" + 30 + "s %" + 30 + "s\n", "Mã NV: " + idEmployee, "Mã NCC: " + idSupplier, "Ngày: " + importDate);
         int colSpace = 15;
         System.out.printf("%-" + colSpace + "s %-"
                 + colSpace + "s %-"

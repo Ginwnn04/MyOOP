@@ -10,28 +10,15 @@ public class DetailsImport {
     private long totalPrice;
     private boolean isDelete = false;
 
-    public DetailsImport(int type, String idBillImport, String nameProduct, String unit, int quantity, long importPrice) {
+    public DetailsImport(String idBillImport, String idProduct, String nameProduct, String unit, int quantity, long importPrice) {
         this.idBillImport = idBillImport;
-        this.idProduct = generateIdProduct(type);
+        this.idProduct = idProduct;
         this.nameProduct = nameProduct;
         this.unit = unit;
         this.quantity = quantity;
         this.importPrice = importPrice;
         this.totalPrice = importPrice * quantity;
     }
-    public String generateIdProduct(int type) {
-        // 1 = Foods
-        // 2 = Drinks
-        String firstID = "";
-        if (type == 1) {
-            firstID = "FD";
-        }
-        else {
-            firstID = "DK";
-        }
-        return firstID + "-" + (int)(Math.random() * 100000000);
-    }
-
 
     public void printDetail() {
         int colSpace = 15;
@@ -48,30 +35,4 @@ public class DetailsImport {
         return totalPrice;
     }
 
-    public String getIdProduct() {
-        return idProduct;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-    public void setIsDelete(boolean flag) {
-        isDelete = flag;
-    }
-
-    public boolean getIsDelete() {
-        return isDelete;
-    }
-
-    public String getNameProduct() {
-        return nameProduct;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public long getImportPrice() {
-        return importPrice;
-    }
 }

@@ -1,5 +1,7 @@
 package MyOOP.Manager;
 
+import MyOOP.Entity.ImportProduct;
+
 public class Menu {
     ListProduct list = new ListProduct();
     public void printMenuEmployee() {
@@ -26,6 +28,7 @@ public class Menu {
     }
 
     public void subMenuAdd() {
+
         int choice;
         do {
             System.out.printf("%" + 30 + "s\n", "THÊM SẢN PHẨM");
@@ -35,10 +38,11 @@ public class Menu {
             choice = new Validate().checkChoiceUser(1,3);
             switch (choice) {
                 case 1:
-                    list.importProduct(choice);
+
+                    list.importProductFormFile();
                     break;
                 case 2:
-                    list.importProduct(choice);
+                    list.importProduct();
                     break;
             }
 
