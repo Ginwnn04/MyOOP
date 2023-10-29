@@ -30,7 +30,10 @@ public class ListProduct {
                 billImport.insertDetail(product.getID(), product.getNameProduct(), product.getUnit(), product.getQuantity(), product.getPrice());
                 System.out.println("Thêm thành công !");
             }
-            System.out.printf("Thêm thất bại !");
+            else {
+                System.out.printf("Thêm thất bại !");
+            }
+            new Validate().clearBuffer();
             choice = new Validate().checkStringUser("Bạn có muốn tiếp tục thêm sản phẩm không (y/n)");
 
         } while (choice.charAt(0) == 'y');
