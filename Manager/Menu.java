@@ -7,7 +7,7 @@ public class Menu {
     public void printMenuEmployee() {
         int choice;
         do {
-            System.out.printf("%" + 30 + "s\n", "QUẢN LÝ CỬA HÀNG");
+            System.out.println("==================QUẢN LÝ CỬA HÀNG=====================");
             System.out.println("1. Thêm sản phẩm.");
             System.out.println("2. Hiển thị danh sách sản phẩm.");
             System.out.println("3. Sửa thông tin sản phẩm");
@@ -31,7 +31,7 @@ public class Menu {
 
         int choice;
         do {
-            System.out.printf("%" + 30 + "s\n", "THÊM SẢN PHẨM");
+            System.out.println("=====================THÊM SẢN PHẨM========================");
             System.out.println("1. Thêm sản phẩm từ file.");
             System.out.println("2. Thêm sản phẩm từ bàn phím.");
             System.out.println("3. Quay lại.");

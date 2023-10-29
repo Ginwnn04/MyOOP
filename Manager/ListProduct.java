@@ -22,7 +22,7 @@ public class ListProduct {
         billImport.insertInfor();
         String choice = "";
         do {
-            System.out.printf("%" + 60 + "s\n", "THÊM SẢN PHẨM");
+            System.out.println("====================THÊM SẢN PHẨM======================");
             Product product = createProduct();
             if (product != null) {
                 listProduct = Arrays.copyOf(listProduct, totalProduct + 1);
@@ -84,6 +84,7 @@ public class ListProduct {
     }
 
 
+
     public Product createProduct() {
         System.out.println("1. Thực phẩm");
         System.out.println("2. Thức uống");
@@ -110,27 +111,11 @@ public class ListProduct {
         }
         return null;
     }
-    public void displayProduct(int type) {
-        String title = "";
-        if (type == 1) {
-            title = "DANH SÁCH THỰC PHẨM";
-        }
-        else if(type == 2) {
-            title = "DANH SÁCH THỨC UỐNG";
-        }
-        int colSpace = 15;
-        System.out.printf("%" + 40 + "s\n", title);
-        System.out.printf("%-" + colSpace + "s %-"
-                            + colSpace + "s %-"
-                            + colSpace + "s %-"
-                            + colSpace + "s %-"
-                            + colSpace + "s", "Mã sản phẩm", "Tên sản phẩm", "Đơn vị tính", "Số lượng", "Giá");
-    }
+
 
     public void show() {
-        String title = "DANH SÁCH SẢN PHẨM";
         int colSpace = 15;
-        System.out.printf("%" + 60 + "s\n", title);
+        System.out.println("=======================DANH SÁCH SẢN PHẨM======================");
         System.out.printf("%-" + colSpace + "s %-"
                 + colSpace + "s %-"
                 + colSpace + "s %-"

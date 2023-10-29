@@ -48,8 +48,9 @@ public class ImportProduct {
         if (choice.charAt(0) == 'n') {
             return;
         }
+        System.out.println("=====================================================================================");
         System.out.printf("%" + 60 + "s", "BILL NHẬP HÀNG (" + idImportProduct + ")\n");
-        System.out.printf("%" + 30 + "s %" + 30 + "s %" + 30 + "s\n", "Mã NV: " + idEmployee, "Mã NCC: " + idSupplier, "Ngày: " + importDate);
+        System.out.printf("%" + 25 + "s %" + 25 + "s %" + 25 + "s\n", "Mã NV: " + idEmployee, "Mã NCC: " + idSupplier, "Ngày: " + importDate);
         int colSpace = 15;
         System.out.printf("%-" + colSpace + "s %-"
                 + colSpace + "s %-"
