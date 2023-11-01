@@ -46,6 +46,10 @@ public abstract class Product {
         return ID;
     }
 
+    public boolean isDelete() {
+        return isDelete;
+    }
+
     public String getNameProduct() {
         return nameProduct;
     }
@@ -60,5 +64,9 @@ public abstract class Product {
 
     public int getPrice() {
         return price;
+    }
+
+    public void setDelete(boolean flag) {
+        isDelete = flag;
     }
 }

@@ -4,6 +4,7 @@ import MyOOP.Entity.ImportProduct;
 
 public class Menu {
     ListProduct list = new ListProduct();
+    ListPromotionsSale listSale = new ListPromotionsSale();
     public void printMenuEmployee() {
         int choice;
         do {
@@ -23,6 +24,16 @@ public class Menu {
                 case 2:
                     list.show();
                     break;
+                case 3:
+                    list.updateProduct();
+                    break;
+                case 4:
+                    list.deleteProduct();
+                    break;
+                case 6:
+                    promotionsSaleMenu();
+                    break;
+
             }
         } while(choice != 7);
     }
@@ -38,11 +49,31 @@ public class Menu {
             choice = new Validate().checkChoiceUser(1,3);
             switch (choice) {
                 case 1:
-
                     list.importProductFormFile();
                     break;
                 case 2:
                     list.importProduct();
+                    break;
+            }
+
+        } while(choice != 3);
+    }
+
+    public void promotionsSaleMenu() {
+        int choice;
+        do {
+            System.out.println("=====================TẠO CHƯƠNG TRÌNH KHUYẾN MÃI========================");
+            System.out.println("1. Tạo chương trình khuyến mãi.");
+            System.out.println("2. Hiển thị danh sách mã khuyến mãi của 1 chương trình.");
+            System.out.println("3. Quay lại.");
+            choice = new Validate().checkChoiceUser(1,3);
+            switch (choice) {
+                case 1:
+                    listSale.addPromotionsSale();
+                    break;
+                case 2:
+                    listSale.show();
+                    listSale.addVoucher();
                     break;
             }
 

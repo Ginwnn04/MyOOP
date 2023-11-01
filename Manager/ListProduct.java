@@ -17,6 +17,11 @@ public class ListProduct {
     public ListProduct() {
         listProduct = new Product[totalProduct];
     }
+    // Copy list san pham
+    public ListProduct(ListProduct x) {
+        this.listProduct = x.listProduct;
+        this.totalProduct = x.totalProduct;
+    }
 
     public void importProduct() {
         billImport.insertInfor();
@@ -93,6 +98,7 @@ public class ListProduct {
         String nameProduct = new Validate().checkStringUser("Nhập tên sản phẩm");
         String unit = new Validate().checkStringUser("Nhập đơn vị tính của sản phẩm");
         int quantity = new Validate().checkNumberProduct("Nhập số lượng sản phẩm");
+        new Validate().clearBuffer();
         int priceProduct = new Validate().checkNumberProduct("Nhập số tiền nhập sản phẩm");
         if (quantity == -1 || priceProduct == -1) {
             return null;
@@ -112,6 +118,46 @@ public class ListProduct {
         return null;
     }
 
+    public void updateProduct() {
+        show();
+        String idProductUser = new Validate().checkStringUser("Nhập vào ID sản phẩm cần sửa");
+        for(int i = 0; i < totalProduct; i++) {
+            if (listProduct[i].getID().equals(idProductUser)) {
+                Product tmp =  createProduct();
+                if (tmp != null) {
+                    listProduct[i] = tmp;
+                    System.out.println("Sửa thành công !!");
+                    return;
+                }
+            }
+            else {
+                System.out.println("Không tìm thấy ID sản phẩm");
+            }
+        }
+        System.out.println("Sửa thất bại");
+
+    }
+
+    public void deleteProduct() {
+        show();
+        String idProductUser = new Validate().checkStringUser("Nhập vào ID sản phẩm cần xoá");
+        for(int i = 0; i < totalProduct; i++) {
+            if (listProduct[i].getID().equals(idProductUser)) {
+                listProduct[i].setDelete(true);
+                System.out.println("Xóa thành công");
+                return;
+            }
+            System.out.println("Không tìm thấy ID sản phẩm");
+        }
+        System.out.println("Xóa thất thất bại");
+
+    }
+
+    public void report() {
+
+    }
+
+
 
     public void show() {
         int colSpace = 15;
@@ -125,7 +171,9 @@ public class ListProduct {
                 + colSpace + "s %-"
                 + colSpace + "s\n", "Mã sản phẩm", "Tên sản phẩm", "Khối lượng", "Thể tích","Loại sản phẩm" , "Đơn vị tính", "Số lượng", "Giá tiền");
         for(Product x : listProduct) {
-            x.print();
+            if (x.isDelete() == false) {
+                x.print();
+            }
         }
     }
 

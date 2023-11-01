@@ -34,4 +34,17 @@ public class PromotionsSale {
         return listVoucher[totalVoucher - 1].getidVoucher();
     }
 
+    public void promotionsSale() {
+        int colSpace = 25;
+        System.out.printf("%-" + colSpace + "s %-"
+                + colSpace + "s %-"
+                + colSpace + "s %-"
+                + colSpace + "s %-"
+                + colSpace + "s\n", namePromotions, keyPromotions, totalVoucher, startDate, endDate);
+
+    }
+
+    public String getKeyPromotions() {
+        return keyPromotions;
+    }
 }
