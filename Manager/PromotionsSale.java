@@ -31,18 +31,32 @@ public class PromotionsSale {
         }
         listVoucher = Arrays.copyOf(listVoucher, totalVoucher + 1);
         listVoucher[totalVoucher++] = new Voucher(keyPromotions, discount);
+        new Validate().clearBuffer();
         return listVoucher[totalVoucher - 1].getidVoucher();
     }
 
-    public void promotionsSale() {
+    public void showPromotionsSale() {
         int colSpace = 25;
-        System.out.printf("%-" + colSpace + "s %-"
-                + colSpace + "s %-"
-                + colSpace + "s %-"
-                + colSpace + "s %-"
-                + colSpace + "s\n", namePromotions, keyPromotions, totalVoucher, startDate, endDate);
+        for(Voucher x : listVoucher) {
+            System.out.printf("%-" + colSpace + "s %-"
+                    + colSpace + "s %-"
+                    + colSpace + "s %-"
+                    + colSpace + "s %-"
+                    + colSpace + "s\n", namePromotions, startDate, endDate, x.getidVoucher(), x.getmoneyOff());
+        }
 
     }
+
+    public void showVoucher() {
+        int colSpace = 25;
+        System.out.printf("%-" + colSpace + "s %-"
+                + colSpace + "s\n", "Mã voucher", "Tiền giảm");
+
+        for(Voucher x: listVoucher) {
+            x.printVoucher();
+        }
+    }
+
 
     public String getKeyPromotions() {
         return keyPromotions;

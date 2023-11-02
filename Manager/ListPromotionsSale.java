@@ -25,22 +25,22 @@ public class ListPromotionsSale {
         System.out.println("Tạo chương trình khuyến mãi thành công !");
     }
 
-    public void show() {
+    public void showAllPromotionsSale() {
         int colSpace = 25;
         System.out.println("=======================DANH SÁCH CHƯƠNG TRÌNH KHUYẾN MÃI======================");
         System.out.printf("%-" + colSpace + "s %-"
                 + colSpace + "s %-"
                 + colSpace + "s %-"
                 + colSpace + "s %-"
-                + colSpace + "s\n", "Tên chương trình", "Mã chương trình", "Số lượng mã giảm giá", "Ngày bắt đầu","Ngày kết thúc");
+                + colSpace + "s\n", "Tên chương trình", "Ngày bắt đầu", "Ngày kết thúc", "Mã voucher", "Tiền giảm giá");
         for(PromotionsSale x : listPromotionsSale) {
-            x.promotionsSale();
+            x.showPromotionsSale();
+
         }
     }
 
     public void addVoucher() {
-        String loop;
-        String choice = new Validate().checkStringUser("Bạn có muốn tạo mã khuyến mãi (y/n)");
+        String choice = new Validate().checkStringUser("Bạn có muốn thêm voucher");
         if (choice.charAt(0) == 'y') {
             String keyPromotionsSale = new Validate().checkStringUser("Nhập mã chương trình khuyến mãi");
             for(int i = 0;i < totalPromotionsSale; i++) {
@@ -48,8 +48,8 @@ public class ListPromotionsSale {
                     do {
                         listPromotionsSale[i].creatVoucher();
                         System.out.println("Tạo mã thành công !");
-                        loop = new Validate().checkStringUser("Bạn có muốn tiếp tục (y/n)");
-                    } while (loop.charAt(0) == 'y');
+                        choice = new Validate().checkStringUser("Bạn có muốn tiếp tục (y/n)");
+                    } while (choice.charAt(0) == 'y');
                 }
             }
         }

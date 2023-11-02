@@ -22,6 +22,12 @@ public class Voucher {
         return firstKey + "-" + stringBuilder.toString();
     }
 
+    public void printVoucher() {
+        int colSpace = 25;
+        System.out.printf("%-" + colSpace + "s %-"
+                + colSpace + "d\n", idVoucher, moneyOff);
+
+    }
 
     public String getidVoucher() {
         return idVoucher;
