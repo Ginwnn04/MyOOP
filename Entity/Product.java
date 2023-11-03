@@ -6,6 +6,7 @@ public abstract class Product {
     String unit;
     int quantity;
     int price;
+    int priceImport;
     boolean isDelete;
 
     public Product() {
@@ -17,13 +18,14 @@ public abstract class Product {
         this.isDelete = true;
     }
 
-    public Product(int type, String nameProduct, String unit, int quantity, int price) {
+    public Product(int type, String nameProduct, String unit, int quantity, int price, int priceImport) {
         this.ID = generateIdProduct(type);
         this.nameProduct = nameProduct;
         this.unit = unit;
         this.quantity = quantity;
         this.price = price;
         this.isDelete = false;
+        this.priceImport = priceImport;
     }
     public String generateIdProduct(int type) {
         // 1 = Foods
@@ -68,5 +70,9 @@ public abstract class Product {
 
     public void setDelete(boolean flag) {
         isDelete = flag;
+    }
+
+    public int getPriceImport() {
+        return priceImport;
     }
 }
