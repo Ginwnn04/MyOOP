@@ -19,10 +19,10 @@ public class Menu {
             choice = new Validate().checkChoiceUser(1,7);
             switch (choice) {
                 case 1:
-                    subMenuAdd();
+                    addNewProductMenu();
                     break;
                 case 2:
-                    list.show();
+                    list.showProduct(true);
                     break;
                 case 3:
                     list.updateProduct();
@@ -39,10 +39,9 @@ public class Menu {
     }
 
     public void subMenuAdd() {
-
         int choice;
         do {
-            System.out.println("=====================THÊM SẢN PHẨM========================");
+            System.out.println("=====================THÊM MỚI SẢN PHẨM========================");
             System.out.println("1. Thêm sản phẩm từ file.");
             System.out.println("2. Thêm sản phẩm từ bàn phím.");
             System.out.println("3. Quay lại.");
@@ -53,6 +52,26 @@ public class Menu {
                     break;
                 case 2:
                     list.importProduct();
+                    break;
+            }
+
+        } while(choice != 3);
+    }
+
+    public void addNewProductMenu() {
+        int choice;
+        do {
+            System.out.println("=====================THÊM SẢN PHẨM========================");
+            System.out.println("1. Thêm mới sản phẩm.");
+            System.out.println("2. Thêm số lượng sản phẩm.");
+            System.out.println("3. Quay lại.");
+            choice = new Validate().checkChoiceUser(1,3);
+            switch (choice) {
+                case 1:
+                    subMenuAdd();
+                    break;
+                case 2:
+                    list.addQuantityProduct();
                     break;
             }
 

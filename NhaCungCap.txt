@@ -1,4 +1,4 @@
-2|C2 Trà Đào|Chai|22|7000|330
+2|C2 Trà Đào|Chai|10|7000|330
 1|Thịt heo|Kg|31|150000|Gia súc|333
 1|Trứng gà|Vỉ|11|23000|Gia cầm|10
 2|Sting dâu|Chai|34|9000|500

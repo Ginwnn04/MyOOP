@@ -124,7 +124,7 @@ public class ListProduct {
     }
 
     public void updateProduct() {
-        show();
+        showProduct(true);
         boolean flag = false;
         String idProductUser = new Validate().checkStringUser("Nhập vào ID sản phẩm cần sửa");
         for(int i = 0; i < totalProduct; i++) {
@@ -146,7 +146,7 @@ public class ListProduct {
     }
 
     public void deleteProduct() {
-        show();
+        showProduct(true);
         boolean flag = false;
         String idProductUser = new Validate().checkStringUser("Nhập vào ID sản phẩm cần xoá");
         for(int i = 0; i < totalProduct; i++) {
@@ -164,13 +164,35 @@ public class ListProduct {
 
     }
 
+    public void addQuantityProduct() {
+        showProduct(false);
+        String idProductUser = new Validate().checkStringUser("Nhập ID sản phẩm cần thêm số lượng");
+        boolean flag = false;
+        for(int i = 0; i < totalProduct; i++) {
+            if (listProduct[i].getID().equals(idProductUser)) {
+                int newQuantity = new Validate().checkNumberProduct("Nhập số lượng sản phẩm cần thêm");
+                if (newQuantity != -1) {
+                    listProduct[i].setQuantity(newQuantity);
+                    flag = true;
+                    listProduct[i].setDelete(false);
+                    System.out.println("Thêm số lượng thành công");
+                    return;
+                }
+            }
+        }
+        if (flag == false) {
+            System.out.println("Không tìm thấy ID sản phẩm");
+        }
+        System.out.println("Thêm số lượng thất thất bại");
+    }
+
     public void report() {
 
     }
 
 
 
-    public void show() {
+    public void showProduct(boolean flag) {
         int colSpace = 15;
         System.out.println("=======================DANH SÁCH SẢN PHẨM======================");
         System.out.printf("%-" + colSpace + "s %-"
@@ -182,10 +204,19 @@ public class ListProduct {
                 + colSpace + "s %-"
                 + colSpace + "s\n", "Mã sản phẩm", "Tên sản phẩm", "Khối lượng", "Thể tích","Loại sản phẩm" , "Đơn vị tính", "Số lượng", "Giá tiền");
         for(Product x : listProduct) {
-            if (x.isDelete() == false) {
-                x.print();
-            }
+           if (flag) {
+               if (x.getIsDelete() == false) {
+                   x.print();
+               }
+           }
+           else {
+               if (x.getIsDelete() == true) {
+                   x.print();
+               }
+           }
         }
     }
+
+
 
 }
