@@ -32,7 +32,7 @@ public class ListProduct {
             if (product != null) {
                 listProduct = Arrays.copyOf(listProduct, totalProduct + 1);
                 listProduct[totalProduct++] = product;
-                billImport.insertDetail(product.getID(), product.getNameProduct(), product.getUnit(), product.getQuantity(), product.getPrice());
+                billImport.insertDetail(product.getID(), product.getNameProduct(), product.getUnit(), product.getQuantity(), product.getPriceImport());
                 System.out.println("Thêm thành công !");
             }
             else {
@@ -62,25 +62,24 @@ public class ListProduct {
                     int quantity = Integer.parseInt(split[3]);
                     int priceImport = Integer.parseInt(split[4]);
                     listProduct = Arrays.copyOf(listProduct, totalProduct + 1);
-                    int priceProduct = new Validate().checkNumberProduct("Nhập giá bán sản phẩm " + nameProduct + "(" + priceImport + ")");
+                    int priceProduct = new Validate().checkNumberProduct("Nhập giá bán của sản phẩm " + nameProduct + " (" + priceImport + ")" );
                     if (priceProduct != -1) {
                         if (type == 1) {
                             String typeFood = split[5];
                             int amout = Integer.parseInt(split[6]);
-                            listProduct[totalProduct++] = new Foods(type, nameProduct, unit, quantity, priceImport, typeFood, amout);
+                            listProduct[totalProduct++] = new Foods(type, nameProduct, unit, quantity, priceProduct, typeFood, amout, priceImport);
                         }
                         else {
                             int volume = Integer.parseInt(split[5]);
-                            listProduct[totalProduct++] = new Drinks(type, nameProduct, unit, quantity, priceImport, volume);
+                            listProduct[totalProduct++] = new Drinks(type, nameProduct, unit, quantity, priceProduct, volume, priceImport);
                         }
                         Product product = listProduct[totalProduct - 1];
-
-
-                        billImport.insertDetail(product.getID(), product.getNameProduct(), product.getUnit(), product.getQuantity(), priceImport);
+                        billImport.insertDetail(product.getID(), product.getNameProduct(), product.getUnit(), product.getQuantity(), product.getPriceImport());
                     }
                 }
             }
             System.out.println("Đã thêm thành công " + totalProduct + " sản phẩm");
+            new Validate().clearBuffer();
             billImport.printImportBill();
             bufferedReader.close();
 
@@ -105,8 +104,8 @@ public class ListProduct {
         int quantity = new Validate().checkNumberProduct("Nhập số lượng sản phẩm");
         new Validate().clearBuffer();
         int priceImport = new Validate().checkNumberProduct("Nhập giá tiền nhập sản phẩm");
-        int priceProduct = new Validate().checkNumberProduct("Nhập giá bán sản phẩm");
-        if (quantity == -1 || priceProduct == -1 || priceImport == -1) {
+        int priceProduct = new Validate().checkNumberProduct("Nhập giá tiền bán sản phẩm");
+        if (quantity == -1 || priceProduct == -1) {
             return null;
         }
         if (type == 1) {
@@ -114,21 +113,23 @@ public class ListProduct {
             String typeFood = new Validate().checkStringUser("Nhập loại thực phẩm");
             int amout = new Validate().checkNumberProduct("Nhập khối lượng thực phẩm");
             if (amout != -1) {
-                return new Foods(type, nameProduct, unit, quantity, priceProduct, typeFood, amout);
+                return new Foods(type, nameProduct, unit, quantity, priceProduct, typeFood, amout, priceImport);
             }
         }
         else if (type == 2){
             int volume = new Validate().checkNumberProduct("Nhập thể tích");
-            return new Drinks(type, nameProduct, unit, quantity, priceProduct, volume);
+            return new Drinks(type, nameProduct, unit, quantity, priceProduct, volume, priceImport);
         }
         return null;
     }
 
     public void updateProduct() {
-        show();
+        showProduct(true);
+        boolean flag = false;
         String idProductUser = new Validate().checkStringUser("Nhập vào ID sản phẩm cần sửa");
         for(int i = 0; i < totalProduct; i++) {
             if (listProduct[i].getID().equals(idProductUser)) {
+                flag = true;
                 Product tmp =  createProduct();
                 if (tmp != null) {
                     listProduct[i] = tmp;
@@ -136,27 +137,53 @@ public class ListProduct {
                     return;
                 }
             }
-            else {
-                System.out.println("Không tìm thấy ID sản phẩm");
-            }
+        }
+        if (flag == false) {
+            System.out.println("Không tìm thấy ID");
         }
         System.out.println("Sửa thất bại");
 
     }
 
     public void deleteProduct() {
-        show();
+        showProduct(true);
+        boolean flag = false;
         String idProductUser = new Validate().checkStringUser("Nhập vào ID sản phẩm cần xoá");
         for(int i = 0; i < totalProduct; i++) {
             if (listProduct[i].getID().equals(idProductUser)) {
+                flag = true;
                 listProduct[i].setDelete(true);
                 System.out.println("Xóa thành công");
                 return;
             }
+        }
+        if (flag == false) {
             System.out.println("Không tìm thấy ID sản phẩm");
         }
         System.out.println("Xóa thất thất bại");
 
+    }
+
+    public void addQuantityProduct() {
+        showProduct(false);
+        String idProductUser = new Validate().checkStringUser("Nhập ID sản phẩm cần thêm số lượng");
+        boolean flag = false;
+        for(int i = 0; i < totalProduct; i++) {
+            if (listProduct[i].getID().equals(idProductUser)) {
+                int newQuantity = new Validate().checkNumberProduct("Nhập số lượng sản phẩm cần thêm");
+                if (newQuantity != -1) {
+                    listProduct[i].setQuantity(newQuantity);
+                    flag = true;
+                    listProduct[i].setDelete(false);
+                    System.out.println("Thêm số lượng thành công");
+                    return;
+                }
+            }
+        }
+        if (flag == false) {
+            System.out.println("Không tìm thấy ID sản phẩm");
+        }
+        System.out.println("Thêm số lượng thất thất bại");
     }
 
     public void report() {
@@ -165,7 +192,7 @@ public class ListProduct {
 
 
 
-    public void show() {
+    public void showProduct(boolean flag) {
         int colSpace = 15;
         System.out.println("=======================DANH SÁCH SẢN PHẨM======================");
         System.out.printf("%-" + colSpace + "s %-"
@@ -177,10 +204,19 @@ public class ListProduct {
                 + colSpace + "s %-"
                 + colSpace + "s\n", "Mã sản phẩm", "Tên sản phẩm", "Khối lượng", "Thể tích","Loại sản phẩm" , "Đơn vị tính", "Số lượng", "Giá tiền");
         for(Product x : listProduct) {
-            if (x.isDelete() == false) {
-                x.print();
+            if (flag) {
+                if (x.getIsDelete() == false) {
+                    x.print();
+                }
+            }
+            else {
+                if (x.getIsDelete() == true) {
+                    x.print();
+                }
             }
         }
     }
+
+
 
 }

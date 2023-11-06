@@ -1,12 +1,13 @@
 package MyOOP.Entity;
 
 public abstract class Product {
-    String ID;
-    String nameProduct;
-    String unit;
-    int quantity;
-    int price;
-    boolean isDelete;
+    protected String ID;
+    protected String nameProduct;
+    protected String unit;
+    protected int quantity;
+    protected int price;
+    protected int priceImport;
+    protected boolean isDelete;
 
     public Product() {
         this.ID = "";
@@ -17,13 +18,18 @@ public abstract class Product {
         this.isDelete = true;
     }
 
-    public Product(int type, String nameProduct, String unit, int quantity, int price) {
+    public Product(int type, String nameProduct, String unit, int quantity, int price, int priceImport) {
         this.ID = generateIdProduct(type);
         this.nameProduct = nameProduct;
         this.unit = unit;
         this.quantity = quantity;
         this.price = price;
+        this.priceImport = priceImport;
         this.isDelete = false;
+        if (quantity <= 0 ) {
+            this.isDelete = true;
+        }
+
     }
     public String generateIdProduct(int type) {
         // 1 = Foods
@@ -46,7 +52,7 @@ public abstract class Product {
         return ID;
     }
 
-    public boolean isDelete() {
+    public boolean getIsDelete() {
         return isDelete;
     }
 
@@ -66,7 +72,17 @@ public abstract class Product {
         return price;
     }
 
+
+
     public void setDelete(boolean flag) {
         isDelete = flag;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public int getPriceImport() {
+        return priceImport;
     }
 }
