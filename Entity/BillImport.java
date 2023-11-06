@@ -83,6 +83,12 @@ public class BillImport {
 
     // Hien thi ra tung dong hoa don
     public void printBill() {
-
+        int colSpace = 15;
+        System.out.printf("%-" + colSpace + "s %-"
+                + colSpace + "s %-"
+                + colSpace + "s %-"
+                + colSpace + "s %-"
+                + colSpace + "d %-"
+                + colSpace + "d\n", idImportProduct, idSupplier, idEmployee, importDate, totalImportProduct, totalPriceImportProduct);
     }
 }

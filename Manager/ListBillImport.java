@@ -30,6 +30,9 @@ public class ListBillImport {
                 + colSpace + "s %-"
                 + colSpace + "d %-"
                 + colSpace + "d\n", "Mã phiếu nhập", "Mã nhà cung cấp", "Mã NV giám sát", "Ngày nhập", "Số lượng sp nhập", "Tổng tiền");
+        for (BillImport x : listBill) {
+            x.printBill();
+        }
     // Ma bill, ngay nhap, nhan vien, so luong, tong tien
     }
 }
