@@ -1,6 +1,7 @@
 package MyOOP.Manager;
 
 import java.util.Arrays;
+import MyOOP.Entity.PromotionsSale;
 
 public class ListPromotionsSale {
     public PromotionsSale[] listPromotionsSale;
