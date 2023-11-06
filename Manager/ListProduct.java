@@ -62,17 +62,22 @@ public class ListProduct {
                     int quantity = Integer.parseInt(split[3]);
                     int priceImport = Integer.parseInt(split[4]);
                     listProduct = Arrays.copyOf(listProduct, totalProduct + 1);
-                    if (type == 1) {
-                        String typeFood = split[5];
-                        int amout = Integer.parseInt(split[6]);
-                        listProduct[totalProduct++] = new Foods(type, nameProduct, unit, quantity, priceImport, typeFood, amout);
+                    int priceProduct = new Validate().checkNumberProduct("Nhập giá bán sản phẩm " + nameProduct + "(" + priceImport + ")");
+                    if (priceProduct != -1) {
+                        if (type == 1) {
+                            String typeFood = split[5];
+                            int amout = Integer.parseInt(split[6]);
+                            listProduct[totalProduct++] = new Foods(type, nameProduct, unit, quantity, priceImport, typeFood, amout);
+                        }
+                        else {
+                            int volume = Integer.parseInt(split[5]);
+                            listProduct[totalProduct++] = new Drinks(type, nameProduct, unit, quantity, priceImport, volume);
+                        }
+                        Product product = listProduct[totalProduct - 1];
+
+
+                        billImport.insertDetail(product.getID(), product.getNameProduct(), product.getUnit(), product.getQuantity(), priceImport);
                     }
-                    else {
-                        int volume = Integer.parseInt(split[5]);
-                        listProduct[totalProduct++] = new Drinks(type, nameProduct, unit, quantity, priceImport, volume);
-                    }
-                    Product product = listProduct[totalProduct - 1];
-                    billImport.insertDetail(product.getID(), product.getNameProduct(), product.getUnit(), product.getQuantity(), product.getPrice());
                 }
             }
             System.out.println("Đã thêm thành công " + totalProduct + " sản phẩm");
@@ -99,8 +104,9 @@ public class ListProduct {
         String unit = new Validate().checkStringUser("Nhập đơn vị tính của sản phẩm");
         int quantity = new Validate().checkNumberProduct("Nhập số lượng sản phẩm");
         new Validate().clearBuffer();
-        int priceProduct = new Validate().checkNumberProduct("Nhập số tiền nhập sản phẩm");
-        if (quantity == -1 || priceProduct == -1) {
+        int priceImport = new Validate().checkNumberProduct("Nhập giá tiền nhập sản phẩm");
+        int priceProduct = new Validate().checkNumberProduct("Nhập giá bán sản phẩm");
+        if (quantity == -1 || priceProduct == -1 || priceImport == -1) {
             return null;
         }
         if (type == 1) {
