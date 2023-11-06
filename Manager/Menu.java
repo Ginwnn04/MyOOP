@@ -1,7 +1,5 @@
 package MyOOP.Manager;
 
-import MyOOP.Entity.ImportProduct;
-
 public class Menu {
     ListProduct list = new ListProduct();
     ListPromotionsSale listSale = new ListPromotionsSale();

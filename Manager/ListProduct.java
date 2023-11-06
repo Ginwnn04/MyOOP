@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class ListProduct {
     private int totalProduct;
     private Product[] listProduct;
-    ImportProduct billImport = new ImportProduct();
+    private ListBillImport listBillImport;
 
     public ListProduct() {
         listProduct = new Product[totalProduct];
@@ -21,9 +21,11 @@ public class ListProduct {
     public ListProduct(ListProduct x) {
         this.listProduct = x.listProduct;
         this.totalProduct = x.totalProduct;
+        this.listBillImport = x.listBillImport;
     }
 
     public void importProduct() {
+        BillImport billImport = new BillImport();
         billImport.insertInfor();
         String choice = "";
         do {
@@ -43,9 +45,12 @@ public class ListProduct {
 
         } while (choice.charAt(0) == 'y');
         billImport.printImportBill();
+        listBillImport.creatBillImport(billImport);
+
     }
 
     public void importProductFormFile() {
+        BillImport billImport = new BillImport();
         billImport.insertInfor();
         String path = new Validate().checkStringUser("Nhập vào địa chỉ file");
 
@@ -81,6 +86,7 @@ public class ListProduct {
             System.out.println("Đã thêm thành công " + totalProduct + " sản phẩm");
             new Validate().clearBuffer();
             billImport.printImportBill();
+            listBillImport.creatBillImport(billImport);
             bufferedReader.close();
 
         }
