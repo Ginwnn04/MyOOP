@@ -10,12 +10,13 @@ import java.util.Arrays;
 
 
 public class ListProduct {
-    private int totalProduct;
     private Product[] listProduct;
-    private ListBillImport listBillImport;
+    private int totalProduct;
+    public ListBillImport listBillImport;
 
     public ListProduct() {
         listProduct = new Product[totalProduct];
+        listBillImport = new ListBillImport();
     }
     // Copy list san pham
     public ListProduct(ListProduct x) {
@@ -53,7 +54,7 @@ public class ListProduct {
         BillImport billImport = new BillImport();
         billImport.insertInfor();
         String path = new Validate().checkStringUser("Nhập vào địa chỉ file");
-
+        int count = 0;
         try {
             FileReader fileReader = new FileReader(path);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -78,12 +79,13 @@ public class ListProduct {
                             int volume = Integer.parseInt(split[5]);
                             listProduct[totalProduct++] = new Drinks(type, nameProduct, unit, quantity, priceProduct, volume, priceImport);
                         }
+                        count++;
                         Product product = listProduct[totalProduct - 1];
                         billImport.insertDetail(product.getID(), product.getNameProduct(), product.getUnit(), product.getQuantity(), product.getPriceImport());
                     }
                 }
             }
-            System.out.println("Đã thêm thành công " + totalProduct + " sản phẩm");
+            System.out.println("Đã thêm thành công " + count + " sản phẩm");
             new Validate().clearBuffer();
             billImport.printImportBill();
             listBillImport.creatBillImport(billImport);

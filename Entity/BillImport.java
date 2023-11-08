@@ -83,7 +83,7 @@ public class BillImport {
 
     // Hien thi ra tung dong hoa don
     public void printBill() {
-        int colSpace = 15;
+        int colSpace = 20;
         System.out.printf("%-" + colSpace + "s %-"
                 + colSpace + "s %-"
                 + colSpace + "s %-"

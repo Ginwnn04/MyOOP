@@ -5,8 +5,8 @@ import MyOOP.Entity.BillImport;
 import java.util.Arrays;
 
 public class ListBillImport {
-    BillImport[] listBill;
-    int size;
+    private BillImport[] listBill;
+    private int size;
 
     public ListBillImport() {
         listBill = new BillImport[size];
@@ -23,13 +23,13 @@ public class ListBillImport {
     }
 
     public void show() {
-        int colSpace = 15;
+        int colSpace = 20;
         System.out.printf("%-" + colSpace + "s %-"
                 + colSpace + "s %-"
                 + colSpace + "s %-"
                 + colSpace + "s %-"
-                + colSpace + "d %-"
-                + colSpace + "d\n", "Mã phiếu nhập", "Mã nhà cung cấp", "Mã NV giám sát", "Ngày nhập", "Số lượng sp nhập", "Tổng tiền");
+                + colSpace + "s %-"
+                + colSpace + "s\n", "Mã phiếu nhập", "Mã nhà cung cấp", "Mã NV giám sát", "Ngày nhập", "Số lượng sp nhập", "Tổng tiền");
         for (BillImport x : listBill) {
             x.printBill();
         }

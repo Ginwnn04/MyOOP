@@ -27,6 +27,7 @@ public class Menu {
                     list.updateProduct();
                     break;
                 case 4:
+                    list.listBillImport.show();
                     // Find
                     break;
                 case 5:
