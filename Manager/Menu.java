@@ -8,7 +8,7 @@ public class Menu {
         do {
             System.out.println("==================QUẢN LÝ CỬA HÀNG=====================");
             System.out.println("1. Thêm sản phẩm.");
-            System.out.println("2. Hiển thị danh sách sản phẩm.");
+            System.out.println("2. Hiển thị danh sách.");
             System.out.println("3. Sửa thông tin sản phẩm");
             System.out.println("4. Tìm kiếm tin sản phẩm");
             System.out.println("5. Xoá sản phẩm");
@@ -21,13 +21,12 @@ public class Menu {
                     addNewProductMenu();
                     break;
                 case 2:
-                    list.showProduct(true);
+                    showSubMenu();
                     break;
                 case 3:
                     list.updateProduct();
                     break;
                 case 4:
-                    list.listBillImport.show();
                     // Find
                     break;
                 case 5:
@@ -120,8 +119,27 @@ public class Menu {
                     listSale.addPromotionsSale();
                     break;
                 case 2:
-                    listSale.showAllPromotionsSale();
-                    listSale.addVoucher();
+                    list.listBillImport.show();
+                    break;
+            }
+
+        } while(choice != 5);
+    }
+
+    public void showSubMenu() {
+        int choice;
+        do {
+            System.out.println("=====================HIỂN THỊ DANH SÁCH========================");
+            System.out.println("1. Hiển thị danh sách sản phẩm.");
+            System.out.println("2. Hiển thị danh sách phiếu nhập.");
+            System.out.println("3. Quay lại.");
+            choice = new Validate().checkChoiceUser(1, 3);
+            switch (choice) {
+                case 1:
+                    list.showProduct(true);
+                    break;
+                case 2:
+                    list.listBillImport.show();
                     break;
             }
 
