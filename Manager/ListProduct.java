@@ -2,17 +2,15 @@ package MyOOP.Manager;
 
 import MyOOP.Entity.*;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Arrays;
 
 
-public class ListProduct {
+public class ListProduct implements ServiceFile{
     private int totalProduct;
     private Product[] listProduct;
-    private ListBillImport listBillImport;
+     ListBillImport listBillImport = new ListBillImport();
+     private String path = System.getProperty("user.dir") + "/src/MyOOP/KhoSanPham.txt";
 
     public ListProduct() {
         listProduct = new Product[totalProduct];
@@ -34,7 +32,7 @@ public class ListProduct {
             if (product != null) {
                 listProduct = Arrays.copyOf(listProduct, totalProduct + 1);
                 listProduct[totalProduct++] = product;
-                billImport.insertDetail(product.getID(), product.getNameProduct(), product.getUnit(), product.getQuantity(), product.getPriceImport());
+//                billImport.insertDetail(product.getID(), product.getNameProduct(), product.getUnit(), product.getQuantity(), product.getPriceImport());
                 System.out.println("Thêm thành công !");
             }
             else {
@@ -46,14 +44,17 @@ public class ListProduct {
         } while (choice.charAt(0) == 'y');
         billImport.printImportBill();
         listBillImport.creatBillImport(billImport);
-
+        listBillImport.writeData();
+        writeData();
     }
+
 
     public void importProductFormFile() {
         BillImport billImport = new BillImport();
         billImport.insertInfor();
-        String path = new Validate().checkStringUser("Nhập vào địa chỉ file");
-
+        String currentDirectory = System.getProperty("user.dir");
+        String path = currentDirectory + "/src/MyOOP/NhaCungCap.txt";
+        int count = 0;
         try {
             FileReader fileReader = new FileReader(path);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -72,21 +73,24 @@ public class ListProduct {
                         if (type == 1) {
                             String typeFood = split[5];
                             int amout = Integer.parseInt(split[6]);
-                            listProduct[totalProduct++] = new Foods(type, nameProduct, unit, quantity, priceProduct, typeFood, amout, priceImport);
+                            listProduct[totalProduct++] = new Foods(type, nameProduct, unit, quantity, priceProduct, typeFood, amout);
                         }
                         else {
                             int volume = Integer.parseInt(split[5]);
-                            listProduct[totalProduct++] = new Drinks(type, nameProduct, unit, quantity, priceProduct, volume, priceImport);
+                            listProduct[totalProduct++] = new Drinks(type, nameProduct, unit, quantity, priceProduct, volume);
                         }
+                        count++;
                         Product product = listProduct[totalProduct - 1];
-                        billImport.insertDetail(product.getID(), product.getNameProduct(), product.getUnit(), product.getQuantity(), product.getPriceImport());
+                        billImport.insertDetail(product.getID(), product.getNameProduct(), product.getUnit(), product.getQuantity(), priceImport);
                     }
                 }
             }
-            System.out.println("Đã thêm thành công " + totalProduct + " sản phẩm");
+            System.out.println("Đã thêm thành công " + count + " sản phẩm");
             new Validate().clearBuffer();
             billImport.printImportBill();
             listBillImport.creatBillImport(billImport);
+            listBillImport.writeData();
+            writeData();
             bufferedReader.close();
 
         }
@@ -97,7 +101,6 @@ public class ListProduct {
         }
 
     }
-
 
 
     public Product createProduct() {
@@ -119,12 +122,12 @@ public class ListProduct {
             String typeFood = new Validate().checkStringUser("Nhập loại thực phẩm");
             int amout = new Validate().checkNumberProduct("Nhập khối lượng thực phẩm");
             if (amout != -1) {
-                return new Foods(type, nameProduct, unit, quantity, priceProduct, typeFood, amout, priceImport);
+//                return new Foods(type, nameProduct, unit, quantity, priceProduct, typeFood, amout, priceImport);
             }
         }
         else if (type == 2){
             int volume = new Validate().checkNumberProduct("Nhập thể tích");
-            return new Drinks(type, nameProduct, unit, quantity, priceProduct, volume, priceImport);
+//            return new Drinks(type, nameProduct, unit, quantity, priceProduct, volume, priceImport);
         }
         return null;
     }
@@ -192,12 +195,6 @@ public class ListProduct {
         System.out.println("Thêm số lượng thất thất bại");
     }
 
-    public void report() {
-
-    }
-
-
-
     public void showProduct(boolean flag) {
         int colSpace = 15;
         System.out.println("=======================DANH SÁCH SẢN PHẨM======================");
@@ -224,5 +221,60 @@ public class ListProduct {
     }
 
 
+    @Override
+    public void readData() {
+        try {
+            FileReader fileReader = new FileReader(path);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line = "";
+            while ((line = bufferedReader.readLine()) != null) {
+                listProduct = Arrays.copyOf(listProduct, totalProduct + 1);
+                String[] split = line.split("\\|");
+                String idProduct = split[0];
+                String nameProduct = split[1];
+                String unit = split[2];
+                int quantity = Integer.parseInt(split[3]);
+                int price = Integer.parseInt(split[4]);
+                String firstKey = idProduct.substring(0, 2);
+                if (firstKey.equals("FD")) {
+                    String typeProduct = split[5];
+                    int amout = Integer.parseInt(split[6]);
+                    listProduct[totalProduct++] = new Foods(idProduct, nameProduct, unit, quantity, price, typeProduct, amout);
+                }
+                else {
+                    int volume = Integer.parseInt(split[5]);
+                    listProduct[totalProduct++] = new Drinks(idProduct, nameProduct, unit, quantity, price, volume);
 
+                }
+            }
+            listProduct = null;
+            totalProduct = 0;
+            bufferedReader.close();
+        }
+        catch (FileNotFoundException fnfe) {
+
+        }
+        catch (IOException ioe) {
+
+        }
+    }
+
+    @Override
+    public void writeData() {
+        try {
+            FileWriter fileWriter = new FileWriter(path);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            for(Product x : listProduct) {
+                bufferedWriter.write(x.printToFile() + "\n");
+            }
+            bufferedWriter.close();
+        }
+        catch (FileNotFoundException fnfe) {
+
+        }
+        catch (IOException ioe) {
+
+        }
+
+    }
 }

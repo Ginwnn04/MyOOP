@@ -1,5 +1,7 @@
 package MyOOP.Entity;
 
+import MyOOP.Manager.Validate;
+
 public class DetailsImport {
     private String idBillImport;
     private String idProduct;
@@ -8,7 +10,7 @@ public class DetailsImport {
     private int quantity;
     private long importPrice;
     private long totalPrice;
-    private boolean isDelete = false;
+    private boolean isDelete;
 
     public DetailsImport(String idBillImport, String idProduct, String nameProduct, String unit, int quantity, long importPrice) {
         this.idBillImport = idBillImport;
@@ -29,6 +31,11 @@ public class DetailsImport {
                             + colSpace + "d %-"
                             + colSpace + "d\n", idProduct, nameProduct, unit, quantity, importPrice, totalPrice);
 
+    }
+
+
+    public String printToFile() {
+        return idBillImport + "|" + idProduct + "|" + nameProduct + "|" + unit + "|" + quantity + "|" + importPrice + "|";
     }
 
     public long getTotalPrice() {

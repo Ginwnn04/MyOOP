@@ -6,7 +6,6 @@ public abstract class Product {
     protected String unit;
     protected int quantity;
     protected int price;
-    protected int priceImport;
     protected boolean isDelete;
 
     public Product() {
@@ -18,19 +17,26 @@ public abstract class Product {
         this.isDelete = true;
     }
 
-    public Product(int type, String nameProduct, String unit, int quantity, int price, int priceImport) {
+    // Nhap du lieu tho
+    public Product(int type, String nameProduct, String unit, int quantity, int price) {
         this.ID = generateIdProduct(type);
         this.nameProduct = nameProduct;
         this.unit = unit;
         this.quantity = quantity;
         this.price = price;
-        this.priceImport = priceImport;
-        this.isDelete = false;
         if (quantity <= 0 ) {
             this.isDelete = true;
         }
-
     }
+    // Nhap du lieu co cau truc
+    public Product(String ID, String nameProduct, String unit, int quantity, int price) {
+        this.ID = ID;
+        this.nameProduct = nameProduct;
+        this.unit = unit;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
     public String generateIdProduct(int type) {
         // 1 = Foods
         // 2 = Drinks
@@ -44,9 +50,11 @@ public abstract class Product {
         return firstID + "-" + (int)(Math.random() * 100000000);
     }
 
-
-
     public abstract void print();
+
+    public String printToFile() {
+        return ID + "|" + nameProduct + "|" + unit + "|" + quantity + "|" + price + "|";
+    }
 
     public String getID() {
         return ID;
@@ -82,7 +90,4 @@ public abstract class Product {
         this.quantity = quantity;
     }
 
-    public int getPriceImport() {
-        return priceImport;
-    }
 }

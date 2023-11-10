@@ -31,6 +31,15 @@ public class BillImport {
         this.listDetailsImport = listDetailsImport;
     }
 
+    public BillImport(String idImportProduct, String idProduct, String nameProduct, String unit, int quantity, int importPrice, String importDate, String idEmployee, String idSupplier) {
+        listDetailsImport = Arrays.copyOf(listDetailsImport, totalImportProduct + 1);
+        listDetailsImport[totalImportProduct++] = new DetailsImport(idImportProduct, idProduct, nameProduct, unit, quantity, importPrice);
+        totalPriceImportProduct += listDetailsImport[totalImportProduct - 1].getTotalPrice();
+        this.importDate = importDate;
+        this.idEmployee = idEmployee;
+        this.idSupplier = idSupplier;
+    }
+
     public BillImport() {
         idImportProduct = generateIdImportBill();
         listDetailsImport = new DetailsImport[totalImportProduct];
@@ -43,10 +52,14 @@ public class BillImport {
         this.importDate = new Validate().checkStringUser("Nhập ngày nhập hàng");
     }
 
+    // Nhap du lieu tu ban phim
     public void insertDetail(String idProduct, String nameProduct, String unit, int quantity, int importPrice) {
         listDetailsImport = Arrays.copyOf(listDetailsImport, totalImportProduct + 1);
         listDetailsImport[totalImportProduct++] = new DetailsImport(idImportProduct, idProduct, nameProduct, unit, quantity, importPrice);
+        totalPriceImportProduct += listDetailsImport[totalImportProduct - 1].getTotalPrice();
     }
+
+
 
     public String generateIdImportBill() {
         return  (int)(Math.random() * 1000000000) + "";
@@ -71,7 +84,6 @@ public class BillImport {
                 + colSpace + "s\n", "Mã sản phẩm", "Tên sản phẩm", "Đơn vị tính", "Số lượng", "Giá nhập", "Tổng tiền");
         for(DetailsImport x : listDetailsImport) {
             x.printDetail();
-            totalPriceImportProduct += x.getTotalPrice();
         }
         System.out.printf("%-" + colSpace + "s %-"
                 + colSpace + "s %-"
@@ -83,12 +95,25 @@ public class BillImport {
 
     // Hien thi ra tung dong hoa don
     public void printBill() {
-        int colSpace = 15;
+        int colSpace = 25;
         System.out.printf("%-" + colSpace + "s %-"
                 + colSpace + "s %-"
                 + colSpace + "s %-"
                 + colSpace + "s %-"
                 + colSpace + "d %-"
                 + colSpace + "d\n", idImportProduct, idSupplier, idEmployee, importDate, totalImportProduct, totalPriceImportProduct);
+    }
+
+    public String getIdImportProduct() {
+        return idImportProduct;
+    }
+
+
+    public String printToFile() {
+        String result = "";
+        for (DetailsImport x : listDetailsImport) {
+            result += x.printToFile() + importDate + "|" + idEmployee + "|" + idSupplier + "\n";
+        }
+        return result;
     }
 }

@@ -4,12 +4,15 @@ public class Foods extends Product{
     private String typeFood;
     private int amount;
 
-    public Foods() {
-        super();
+
+    public Foods(int type, String nameProduct, String unit, int quantity, int price, String typeFood, int amount) {
+        super(type, nameProduct, unit, quantity, price);
+        this.typeFood = typeFood;
+        this.amount = amount;
     }
 
-    public Foods(int type, String nameProduct, String unit, int quantity, int price, String typeFood, int amount, int importPrice) {
-        super(type, nameProduct, unit, quantity, price, importPrice);
+    public Foods(String idProduct, String nameProduct, String unit, int quantity, int price, String typeFood, int amount) {
+        super(idProduct, nameProduct, unit, quantity, price);
         this.typeFood = typeFood;
         this.amount = amount;
     }
@@ -26,4 +29,10 @@ public class Foods extends Product{
                 + colSpace + "d %-"
                 + colSpace + "d\n", ID, nameProduct, amount + " gram", "-" ,typeFood , unit, quantity, price);
     }
+
+    @Override
+    public String printToFile() {
+        return super.printToFile() + typeFood + "|" + amount;
+    }
+
 }

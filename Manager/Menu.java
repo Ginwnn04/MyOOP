@@ -8,11 +8,11 @@ public class Menu {
         do {
             System.out.println("==================QUẢN LÝ CỬA HÀNG=====================");
             System.out.println("1. Thêm sản phẩm.");
-            System.out.println("2. Hiển thị danh sách sản phẩm.");
+            System.out.println("2. Hiển thị danh sách.");
             System.out.println("3. Sửa thông tin sản phẩm");
             System.out.println("4. Tìm kiếm tin sản phẩm");
             System.out.println("5. Xoá sản phẩm");
-            System.out.println("6. Thống kê.");
+            System.out.println("6. Hiển thị chi tiết phiếu nhập.");
             System.out.println("7. Chương trình khuyến mãi");
             System.out.println("8. Đăng xuất.");
             choice = new Validate().checkChoiceUser(1, 8);
@@ -21,7 +21,7 @@ public class Menu {
                     addNewProductMenu();
                     break;
                 case 2:
-                    list.showProduct(true);
+                    showSubMenu();
                     break;
                 case 3:
                     list.updateProduct();
@@ -33,7 +33,7 @@ public class Menu {
                     list.deleteProduct();
                     break;
                 case 6:
-                    // Report
+//                    list.listBillImport.test();
                     break;
                 case 7:
                     promotionsSaleMenu();
@@ -119,8 +119,27 @@ public class Menu {
                     listSale.addPromotionsSale();
                     break;
                 case 2:
-                    listSale.showAllPromotionsSale();
-                    listSale.addVoucher();
+                    list.listBillImport.show();
+                    break;
+            }
+
+        } while(choice != 5);
+    }
+
+    public void showSubMenu() {
+        int choice;
+        do {
+            System.out.println("=====================HIỂN THỊ DANH SÁCH========================");
+            System.out.println("1. Hiển thị danh sách sản phẩm.");
+            System.out.println("2. Hiển thị danh sách phiếu nhập.");
+            System.out.println("3. Quay lại.");
+            choice = new Validate().checkChoiceUser(1, 3);
+            switch (choice) {
+                case 1:
+                    list.showProduct(true);
+                    break;
+                case 2:
+                    list.listBillImport.show();
                     break;
             }
 
