@@ -1,0 +1,6 @@
+DK-54505448|C2 Trà Đào|Chai|10|7000|9000|false|330
+FD-55829814|Thịt heo|Kg|31|150000|170000|false|Gia súc|333
+FD-85573343|Trứng gà|Vỉ|11|23000|25000|false|Gia cầm|10
+DK-39537939|Sting dâu|Chai|34|9000|11000|false|500
+DK-27836091|Trà xanh|Chai|15|9000|10000|false|330
+DK-49977965|Boncha|Chai|19|10000|12000|false|500
