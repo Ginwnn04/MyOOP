@@ -1,4 +1,4 @@
-package MyOOP.Manager;
+package DoAnOOP.Manager;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -16,7 +16,7 @@ public class Validate {
         String inputUser = sc.nextLine();
         return inputUser;
     }
-    public int checkMoneyInput(String notify) {
+    public int checkNumberInput(String notify, String error) {
         System.out.printf(notify + ": ");
         int inputUser = -1;
         int countError = 0;
@@ -28,7 +28,8 @@ public class Validate {
                 System.out.println("Nhập sai định dạng, vui lòng nhập lại.");
             }
             if (inputUser < 0) {
-                System.out.println("Số tiền luôn > 0, vui lòng nhập lại.");
+                // Số tiền luôn > 0, vui lòng nhập lại.
+                System.out.println(error);
             }
             else {
                 break;
@@ -38,25 +39,6 @@ public class Validate {
         return inputUser;
     }
 
-
-    // Check so tien nhap vao va so luong
-    public int checkNumberProduct(String notify) {
-        System.out.printf(notify + ": ");
-        int cntError = 0;
-        while (cntError < 3) {
-            try {
-                int numberUser = sc.nextInt();
-                if (numberUser > 0) {
-                    return numberUser;
-                }
-            }
-            catch (InputMismatchException ime) {
-
-            }
-            cntError++;
-        }
-        return -1;
-    }
 
     public int checkChoiceUser(int min, int max) {
         while(true) {

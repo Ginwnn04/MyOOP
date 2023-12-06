@@ -1,4 +1,4 @@
-package MyOOP.Entity;
+package DoAnOOP.Entity;
 
 public class Drinks extends Product{
     private int volume;
@@ -7,13 +7,13 @@ public class Drinks extends Product{
         super();
     }
 
-    public Drinks(int type, String nameProduct, String unit, int quantity, int price,  int volume) {
-        super(type, nameProduct, unit, quantity, price);
+    public Drinks(int type, String nameProduct, String unit, int quantity, int price,  int volume, int priceImport) {
+        super(type, nameProduct, unit, quantity, price, priceImport);
         this.volume = volume;
     }
 
-    public Drinks(String ID, String nameProduct, String unit, int quantity, int price, int volume) {
-        super(ID, nameProduct, unit, quantity, price);
+    public Drinks(String ID, String nameProduct, String unit, int quantity, int price, boolean isDelete, int volume, int priceImport) {
+        super(ID, nameProduct, unit, quantity, price, priceImport, isDelete);
         this.volume = volume;
     }
 
@@ -32,7 +32,7 @@ public class Drinks extends Product{
 
     @Override
     public String printToFile() {
-        return super.printToFile() + volume;
+        return super.printToFile() + volume + "\n";
     }
 
 }

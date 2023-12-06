@@ -1,8 +1,10 @@
-package MyOOP.Manager;
+package DoAnOOP.Manager;
 
 public class Menu {
-    ListProduct list = new ListProduct();
-    ListPromotionsSale listSale = new ListPromotionsSale();
+    private ListProduct list = new ListProduct();
+    private ListPromotionsSale listSale = new ListPromotionsSale();
+    private ListBillImport listBillImport = new ListBillImport();
+    private ListBill listBill = new ListBill();
     public void printMenuEmployee() {
         int choice;
         do {
@@ -12,10 +14,11 @@ public class Menu {
             System.out.println("3. Sửa thông tin sản phẩm");
             System.out.println("4. Tìm kiếm tin sản phẩm");
             System.out.println("5. Xoá sản phẩm");
-            System.out.println("6. Hiển thị chi tiết phiếu nhập.");
+            System.out.println("6. Thống kê.");
             System.out.println("7. Chương trình khuyến mãi");
-            System.out.println("8. Đăng xuất.");
-            choice = new Validate().checkChoiceUser(1, 8);
+            System.out.println("8. Tạo hoá đơn.");
+            System.out.println("9. Đăng xuất.");
+            choice = new Validate().checkChoiceUser(1, 9);
             switch (choice) {
                 case 1:
                     addNewProductMenu();
@@ -27,20 +30,23 @@ public class Menu {
                     list.updateProduct();
                     break;
                 case 4:
-                    // Find
+                    SubMenufind();
                     break;
                 case 5:
                     list.deleteProduct();
                     break;
                 case 6:
-//                    list.listBillImport.test();
+                    // Report
                     break;
                 case 7:
+                    // Chuong trinh khuyen mai
                     promotionsSaleMenu();
                     break;
-
+                case 8:
+                    billMenu();
+                    break;
             }
-        } while(choice != 7);
+        } while(choice != 9);
     }
 
     public void subMenuAdd() {
@@ -53,10 +59,30 @@ public class Menu {
             choice = new Validate().checkChoiceUser(1,3);
             switch (choice) {
                 case 1:
-                    list.importProductFormFile();
+                    list.addProduct(1);
                     break;
                 case 2:
-                    list.importProduct();
+                    list.addProduct(2);
+                    break;
+            }
+
+        } while(choice != 3);
+    }
+
+    public void subMenuRestock() {
+        int choice;
+        do {
+            System.out.println("=====================THÊM MỚI SẢN PHẨM========================");
+            System.out.println("1. Thêm số lượng sản phẩm.");
+            System.out.println("2. Thêm số lượng sản phẩm đã hết HOẶC khôi phục sản phẩm đã xóa");
+            System.out.println("3. Quay lại.");
+            choice = new Validate().checkChoiceUser(1,3);
+            switch (choice) {
+                case 1:
+                    list.restock1();
+                    break;
+                case 2:
+                    list.restock();
                     break;
             }
 
@@ -76,7 +102,7 @@ public class Menu {
                     subMenuAdd();
                     break;
                 case 2:
-                    list.addQuantityProduct();
+                    subMenuRestock();
                     break;
             }
 
@@ -88,20 +114,115 @@ public class Menu {
         do {
             System.out.println("=====================TẠO CHƯƠNG TRÌNH KHUYẾN MÃI========================");
             System.out.println("1. Tạo chương trình khuyến mãi.");
-            System.out.println("2. Hiển thị danh sách mã khuyến mãi của 1 chương trình.");
-            System.out.println("3. Quay lại.");
-            choice = new Validate().checkChoiceUser(1,3);
+            System.out.println("2. Hiển thị danh sách chương trình khuyến mãi.");
+            System.out.println("3. Thêm chương trình khuyến mãi.");
+            System.out.println("4. Xóa chương trình khuyến mãi.");
+            System.out.println("5. Thêm voucher.");
+            System.out.println("6. Xóa voucher.");
+            System.out.println("7. Tìm kiếm chương trình khuyến mãi.");
+            System.out.println("8. Tìm kiếm voucher.");
+            System.out.println("9. Thây đổi tên chương trình khuyến mãi.");
+            System.out.println("10. Đọc File.");
+            System.out.println("11. Ghi File");
+            System.out.println("0. Quay lại.");
+            choice = new Validate().checkChoiceUser(0,11);
             switch (choice) {
                 case 1:
-                    listSale.addPromotionsSale();
+                    listSale.input();
                     break;
                 case 2:
-                    listSale.showAllPromotionsSale();
+                    listSale.print();
+                    break;
+                case 3:
+                    listSale.addPromotionsSale();
+                    break;
+                case 4:
+                    listSale.deletePromotionsSale();
+                    break;
+                case 5:
                     listSale.addVoucher();
+                    break;
+                case 6:
+                    listSale.deleteVoucher();
+                    break;
+                case 7:
+                    listSale.findPromotions();
+                    break;
+                case 8:
+                    listSale.findVoucher();
+                    break;
+                case 9:
+                    listSale.fixNamePromotions();
+                    break;
+                case 10:
+                    listSale.readData();
+                    break;
+                case 11:
+                    listSale.writeData(true);
                     break;
             }
 
-        } while(choice != 3);
+        } while(choice != 0);
+    }
+
+    public void billMenu() {
+        int choice;
+        do {
+            System.out.println("=====================HOA DON========================");
+            System.out.println("1. Tạo hóa đơn mới.");
+            System.out.println("2. Xuất hóa đơn.");
+            System.out.println("3. Lịch sử hóa đơn.");
+            System.out.println("4. Thây đổi số lượng sản phẩm mua.");
+            System.out.println("5. Mua thêm sản phẩm.");
+            System.out.println("6. Xóa bớt sản phẩm.");
+            System.out.println("7. Tìm kiếm hóa đơn bằng mã.");
+            System.out.println("8. Tìm kiếm hóa đơn bằng ngày xuất.");
+            System.out.println("9. Tìm kiếm hóa đơn bằng mã nhân viên.");
+            System.out.println("10. Tìm kiếm hóa đơn bằng tên khách hàng.");
+            System.out.println("11. Doc File");
+            System.out.println("12. Ghi File");
+            System.out.println("0. Quay lại.");
+            choice = new Validate().checkChoiceUser(0,11);
+            switch (choice) {
+                case 1:
+                    listBill.addBill();
+                    break;
+                case 2:
+                    listBill.printBill();
+                    break;
+                case 3:
+                    listBill.printListBill();
+                    break;
+                case 4:
+                    listBill.fixQuantityProduct();
+                    break;
+                case 5:
+                    listBill.addProduct();
+                    break;
+                case 6:
+                    listBill.deleteProduct();
+                    break;
+                case 7:
+                    listBill.findBillByIdBill();
+                    break;
+                case 8:
+                    listBill.findBillByPrintDate();
+                    break;
+                case 9:
+                    listBill.findBillByIdEmployee();
+                    break;
+                case 10:
+                    listBill.findBillByIdCustomer();
+                    break;
+                case 11:
+                    listBill.readData();
+                    break;
+                case 12:
+                    listBill.writeData(true);
+                    break;
+            }
+
+        } while(choice != 0);
     }
 
     public void reportMenu() {
@@ -119,11 +240,30 @@ public class Menu {
                     listSale.addPromotionsSale();
                     break;
                 case 2:
-                    list.listBillImport.show();
+//                    list.listBillImport.show();
                     break;
             }
 
         } while(choice != 5);
+    }
+
+    public void SubMenufind(){
+        int choice;
+        do{
+            System.out.println("=====================TÌM SẢN PHẨM========================");
+            System.out.println("1.Tìm sản phẩm theo mã sản phẩm");
+            System.out.println("2.Tìm sản phẩm theo tên sản phẩm");
+            System.out.println("3.Quay lại");
+            choice = new Validate().checkChoiceUser(1, 3);
+            switch (choice) {
+                case 1:
+                    list.findIdProduct();
+                    break;
+                case 2:
+                    list.findNameProduct();
+                    break;
+            }
+        }while(choice != 3);
     }
 
     public void showSubMenu() {
@@ -139,7 +279,7 @@ public class Menu {
                     list.showProduct(true);
                     break;
                 case 2:
-                    list.listBillImport.show();
+                    listBillImport.show();
                     break;
             }
 

@@ -1,41 +1,57 @@
-package MyOOP.Entity;
+package DoAnOOP.Entity;
+import DoAnOOP.Manager.Validate;
+
 public class Voucher {
     private String idVoucher;
-    private long moneyOff;
+    private int moneyDiscount;
 
-    public Voucher(){
-        this.idVoucher = "";
-        this.moneyOff = 0;
-    }
-    public Voucher(String firstKey, long moneyOff){
-        this.idVoucher = creatKey(firstKey);
-        this.moneyOff = moneyOff;
-    }
-    public String creatKey(String firstKey) {
-        String s = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvxyz0123456789";
-        int size = 12;
-        StringBuilder stringBuilder = new StringBuilder(size);
-        for(int i = 0; i < size; i++) {
-            int x = (int)(Math.random() * 61);
-            stringBuilder.append(s.charAt(x));
-        }
-        return firstKey + "-" + stringBuilder.toString();
-    }
-
-    public void printVoucher() {
-        int colSpace = 25;
-        System.out.printf("%-" + colSpace + "s %-"
-                + colSpace + "d\n", idVoucher, moneyOff);
-
-    }
-
-    public String getidVoucher() {
+    //Getter & Setter
+    public String getidVoucher(){
         return idVoucher;
     }
-    public long getmoneyOff(){
-        return moneyOff;
+    public void setidvoucher(String idVoucher){
+        this.idVoucher=idVoucher;
     }
-    public void setmoneyOff(long moneyOff){
-        this.moneyOff = moneyOff;
+
+    public int getmoneyDiscount(){
+        return moneyDiscount;
+    }
+
+    public void setmoneyDiscount(int moneyDiscount){
+        this.moneyDiscount=moneyDiscount;
+    }
+
+    //Constructor
+    public Voucher(){}
+
+    public Voucher(String idVoucher, int moneyDiscount){
+        this.idVoucher=idVoucher;
+        this.moneyDiscount=moneyDiscount;
+    }
+    
+    //Hàm tạo mã Voucher
+    public String createIdVoucher(){
+        String idVoucher="VC"+"-"+ (int)(Math.random()*1000);
+        return idVoucher;
+    }
+
+    //Hàm nhập
+    public void input(){
+        idVoucher= createIdVoucher();
+        System.out.println(idVoucher);
+        moneyDiscount=new Validate().checkNumberInput("Nhập giá tiền giảm", "Số tiền > 0, vui lòng nhập lại");
+        new Validate().clearBuffer();
+    }
+
+    //Hàm xuất
+    public void print(){
+        int colSpace = 15;
+        System.out.printf("%-" + colSpace + "s %-"
+                + colSpace + "s\n", idVoucher, moneyDiscount);
+    }
+
+    //Ghi voucher vào file
+    public String printToFile(){
+        return idVoucher + "|" + moneyDiscount+"\n";
     }
 }

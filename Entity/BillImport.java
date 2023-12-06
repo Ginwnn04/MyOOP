@@ -1,6 +1,6 @@
-package MyOOP.Entity;
+package DoAnOOP.Entity;
 
-import MyOOP.Manager.Validate;
+import DoAnOOP.Manager.Validate;
 
 import java.util.Arrays;
 
@@ -20,6 +20,13 @@ public class BillImport {
         idImportProduct = generateIdImportBill();
         listDetailsImport = new DetailsImport[totalImportProduct];
     }
+    public BillImport(String idImportProduct, String idSupplier, String idEmployee, String importDate) {
+        this.idImportProduct = idImportProduct;
+        this.idSupplier = idSupplier;
+        this.idEmployee = idEmployee;
+        this.importDate = importDate;
+        listDetailsImport = new DetailsImport[totalImportProduct];
+    }
 
     public BillImport(String idImportProduct, String importDate, String idSupplier, String idEmployee, int totalImportProduct, int totalPriceImportProduct, DetailsImport[] listDetailsImport) {
         this.idImportProduct = idImportProduct;
@@ -32,12 +39,17 @@ public class BillImport {
     }
 
     public BillImport(String idImportProduct, String idProduct, String nameProduct, String unit, int quantity, int importPrice, String importDate, String idEmployee, String idSupplier) {
-        listDetailsImport = Arrays.copyOf(listDetailsImport, totalImportProduct + 1);
-        listDetailsImport[totalImportProduct++] = new DetailsImport(idImportProduct, idProduct, nameProduct, unit, quantity, importPrice);
+         listDetailsImport[totalImportProduct++] = new DetailsImport(idImportProduct, idProduct, nameProduct, unit, quantity, importPrice);
         totalPriceImportProduct += listDetailsImport[totalImportProduct - 1].getTotalPrice();
         this.importDate = importDate;
         this.idEmployee = idEmployee;
         this.idSupplier = idSupplier;
+    }
+
+    public BillImport(String idImportProduct, String idProduct, String nameProduct, String unit, int quantity, int importPrice) {
+        listDetailsImport = Arrays.copyOf(listDetailsImport, totalImportProduct + 1);
+        listDetailsImport[totalImportProduct++] = new DetailsImport(idImportProduct, idProduct, nameProduct, unit, quantity, importPrice);
+        totalPriceImportProduct += listDetailsImport[totalImportProduct - 1].getTotalPrice();
     }
 
     public BillImport() {
@@ -116,4 +128,6 @@ public class BillImport {
         }
         return result;
     }
+
+
 }

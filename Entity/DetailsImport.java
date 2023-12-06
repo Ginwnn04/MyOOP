@@ -1,6 +1,5 @@
-package MyOOP.Entity;
+package DoAnOOP.Entity;
 
-import MyOOP.Manager.Validate;
 
 public class DetailsImport {
     private String idBillImport;
