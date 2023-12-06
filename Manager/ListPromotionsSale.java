@@ -159,7 +159,6 @@ public class ListPromotionsSale implements ServiceFile{
 
     //Hàm lấy giá trị tiền giảm
     public int transMoneyDiscount(String idPromotions, String idVoucher) {
-        readData();
 		for(int i = 0; i < totalPromotionsSale; i++) {
 			if(idPromotions.equals(listPromotionsSale[i].getidPromotions())) {
 			    return listPromotionsSale[i].TransVoucher(idVoucher);

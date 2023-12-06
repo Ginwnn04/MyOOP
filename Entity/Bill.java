@@ -7,9 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 public class Bill {
-    private ListPromotionsSale listPromotionsSale = new ListPromotionsSale();
-    private ListProduct listProduct = new ListProduct();
-    private ListCustomer listCustomer = new ListCustomer();
+
 
     private String idBill;
     private String idEmployee;
@@ -104,17 +102,13 @@ public class Bill {
 	}
 
     //Hàm nhập
-    public void input(){
+    public void input(ListProduct listProduct, ListStaff listStaff, ListCustomer listCustomer, ListPromotionsSale listSale){
         String idVoucher;
         String idPromotions;
         String phone;
-        String lastName;
-        String firstName;
-        int count = 0;
 
         do {
 			printDate = new Validate().checkStringUser("Nhập ngay in hoa don (dd-MM-yyyy)");
-			
 			if(!CheckDate(printDate)) {
 				System.err.println("Ngày tháng năm không hợp lê. Xin mời nhập lại!!!");
 				System.err.println();
@@ -124,7 +118,6 @@ public class Bill {
 
         idBill = createIdBill();
         idEmployee = new Validate().checkStringUser("Nhập mã nhân viên");
-        listStaff.readData();
         if (listStaff.findStaff(idEmployee) == null) {
             System.out.println("Mã nhân viên ko tồn tại");
             return;
@@ -133,8 +126,9 @@ public class Bill {
         System.out.println("Nhập chi tiết hóa đơn.");
         String choice = "";
         do{
-            addDetailBill();
+            addDetailBill(listProduct);
             //Lựa chọn tiếp tục mua thêm hoặc thanh toán
+            new Validate().clearBuffer();
             choice = new Validate().checkStringUser("Bạn có muôn mua thêm (y/n)");
         }while(choice.charAt(0) == 'y');
 
@@ -142,11 +136,9 @@ public class Bill {
         //Lựa chọn sử dụng có sử dụng voucher hay không
         choice = new Validate().checkStringUser("Bạn có mã giảm giá không (y/n)");
         if (choice.charAt(0) == 'y') {
-            listPromotionsSale.readData();
-            listPromotionsSale.print();
             idPromotions = new Validate().checkStringUser("Nhập vào mã CTKM");
             idVoucher = new Validate().checkStringUser("Nhap ma voucehr");
-            moneyDiscount = listPromotionsSale.transMoneyDiscount(idPromotions,idVoucher);
+            moneyDiscount = listSale.transMoneyDiscount(idPromotions,idVoucher);
             if(moneyDiscount == 0){
                 System.err.println("\nMã khách hàng mà bạn vừa nhập không hợp lệ hoặc không có trong danh sách!!!");
             }
@@ -156,7 +148,6 @@ public class Bill {
         choice = new Validate().checkStringUser("Có phải là thanh viên (y/n)");
         if (choice.charAt(0) == 'y') {
             phone = new Validate().checkStringUser("Nhập số điện thoại khách hàng (+84)");
-            listCustomer.readData();
             idCustomer = listCustomer.transIdCustomer(phone);
             if (idCustomer == null) {
                 System.out.println("Không tồn tại khách hàng có sdt là " + phone + "\n");
@@ -195,14 +186,13 @@ public class Bill {
     }
 
     //Hàm mua thêm sản phẩm vào hóa đơn
-    public void addDetailBill(){
+    public void addDetailBill(ListProduct listProduct){
         String idProduct;
         int quantity;
         detailBill = Arrays.copyOf(detailBill, totalDetailBill+1);
 
         //Nhập mã sản phẩm và kiểm tra với từng mã sản phẩm trong kho
         do{
-            listProduct.readData();
             listProduct.showProduct(true);
             System.out.println("Chi tiet thu "+(totalDetailBill+1));
             idProduct = new Validate().checkStringUser("Nhap ma san pham");
@@ -222,7 +212,7 @@ public class Bill {
                     System.out.println("Sản phẩm trong kho không đủ !");
                 }
             }while (quantity > quantityCheck);
-            
+            listProduct.setQuantity(idProduct, (quantityCheck - quantity));
             detailBill[totalDetailBill]= new DetailBill(nameProduct,idProduct,price,quantity);
             totalDetailBill++; 
 

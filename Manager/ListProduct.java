@@ -145,7 +145,6 @@ public class ListProduct implements ServiceFile{
 
     public void updateProduct() {
         showProduct(true);
-        readData();
         boolean flag = false;
         String idProductUser = new Validate().checkStringUser("Nhập vào ID sản phẩm cần sửa");
         for(int i = 0; i < totalProduct; i++) {
@@ -165,12 +164,10 @@ public class ListProduct implements ServiceFile{
         }
         System.out.println("Sửa thất bại");
 
-        resetData();
     }
 
     public void deleteProduct() {
         showProduct(true);
-        readData();
         boolean flag = false;
         String idProductUser = new Validate().checkStringUser("Nhập vào ID sản phẩm cần xoá");
         for(int i = 0; i < totalProduct; i++) {
@@ -178,7 +175,6 @@ public class ListProduct implements ServiceFile{
                 flag = true;
                 listProduct[i].setDelete(true);
                 System.out.println("Xóa thành công");
-                writeData(false);
                 return;
             }
         }
@@ -186,12 +182,10 @@ public class ListProduct implements ServiceFile{
             System.out.println("Không tìm thấy ID sản phẩm");
         }
         System.out.println("Xóa thất thất bại");
-        resetData();
     }
 
     public void restock() {
         showProduct(false);
-        readData();
         String idProductUser = new Validate().checkStringUser("Nhập ID sản cần khôi phục HOẶC thêm số lượng");
         boolean flag = false;
         for(int i = 0; i < totalProduct; i++) {
@@ -221,7 +215,6 @@ public class ListProduct implements ServiceFile{
             System.out.println("Không tìm thấy ID sản phẩm HOẶC số lượng sản phẩm ko hợp lệ");
         }
         System.out.println("Thêm số lượng HOẶC khôi phục thất bại");
-        writeData(false);
     }
 
     public void restock1() {
@@ -230,7 +223,6 @@ public class ListProduct implements ServiceFile{
         String choice;
         do {
             showProduct(true);
-            readData();
             boolean flag = true;
             String idProductUser = new Validate().checkStringUser("Nhập ID sản cần thêm số lượng");
             for(int i = 0; i < totalProduct; i++) {
@@ -253,8 +245,6 @@ public class ListProduct implements ServiceFile{
                 System.out.println("Thêm số lượng thất bại");
             }
             new Validate().clearBuffer();
-            writeData(false);
-            resetData();
             choice = new Validate().checkStringUser("Bạn có muốn tiếp tục thêm sản phẩm không (y/n)");
         } while(choice.charAt(0) == 'y');
         billImport.printImportBill();
@@ -265,7 +255,6 @@ public class ListProduct implements ServiceFile{
 
     // Can fix lai
     public void findIdProduct(){
-        readData();
         boolean flag = false;
         String idProductUser = new Validate().checkStringUser("Nhập vào ID sản phẩm cần tìm");
         printFrame("SẢN PHẨM TÌM THEO ID");
@@ -279,14 +268,12 @@ public class ListProduct implements ServiceFile{
             System.out.println("Không tìm thấy ID sản phẩm");
             System.out.println("Tìm kiếm thất bại");
         }
-        resetData();
 
 
     }
 
     public void findNameProduct(){
         int colSpace = 15;
-        readData();
         boolean flag = false;
         String nameProduct = new Validate().checkStringUser("Nhập vào tên sản phẩm cần tìm");
         printFrame("DANH SÁCH SẢN PHẨM TÌM THEO TÊN");
@@ -300,7 +287,6 @@ public class ListProduct implements ServiceFile{
             System.out.println("Không tìm thấy tên sản phẩm");
             System.out.println("Tìm kiếm thất bại");
         }
-        resetData();
     }
 
 
@@ -318,7 +304,6 @@ public class ListProduct implements ServiceFile{
     }
 
     public void showProduct(boolean flag) {
-        readData();
         printFrame("DANH SÁCH SẢN PHẨM");
         for(Product x : listProduct) {
             if (flag) {
@@ -332,7 +317,6 @@ public class ListProduct implements ServiceFile{
                 }
             }
         }
-        resetData();
     }
 
 
@@ -346,12 +330,13 @@ public class ListProduct implements ServiceFile{
     }
 
     public int transPriceProduct(String idProduct) {
-        readData();
+
 		for(int i = 0; i < totalProduct; i++) {
 			if((listProduct[i].getID()).equals(idProduct)) {
 				return listProduct[i].getPrice();
 			}
-		}resetData();
+		}
+
         return 0;
 	}
 
@@ -373,6 +358,17 @@ public class ListProduct implements ServiceFile{
         return null;
 	}
 
+
+    public void setQuantity(String idProduct, int newQuantity) {
+        for(Product x : listProduct) {
+            if (x.getID().equals(idProduct)) {
+                x.setQuantity(newQuantity);
+                if (newQuantity == 0) {
+                    x.setDelete(true);
+                }
+            }
+        }
+    }
     @Override
     public void resetData() {
         totalProduct = 0;

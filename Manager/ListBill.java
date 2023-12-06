@@ -23,10 +23,10 @@ public class ListBill implements ServiceFile {
     }
     
     //Hàm tạo hóa đơn mới
-    public void addBill(){
+    public void addBill(ListProduct list, ListStaff listStaff, ListCustomer listCustomer, ListPromotionsSale listSale){
         bill = Arrays.copyOf(bill, totalBill+1);
         bill[totalBill]=new Bill();
-        bill[totalBill].input();
+        bill[totalBill].input(list, listStaff, listCustomer, listSale);
         totalBill++;
     }
 
@@ -110,9 +110,9 @@ public class ListBill implements ServiceFile {
     }
   
     //Hàm thêm sản phẩm vào hóa đơn
-    public void addProduct(){
-        bill[totalBill-1].addDetailBill();
-    }
+//    public void addProduct(){
+//        bill[totalBill-1].addDetailBill();
+//    }
 
     //Hàm xóa bớt sản phảm khỏi hóa đơn
     public void deleteProduct(){
