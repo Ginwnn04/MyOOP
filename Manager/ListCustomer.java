@@ -27,7 +27,6 @@ public class ListCustomer implements ServiceFile {
         listCustomer = Arrays.copyOf(listCustomer, totalCustomer + 1);
         listCustomer[totalCustomer++] = new Customer(fullName, phone);
         String idCustomer = listCustomer[totalCustomer - 1].getidCustomer();
-        writeData(true);
         return idCustomer;
     }
 
@@ -47,7 +46,6 @@ public class ListCustomer implements ServiceFile {
         listCustomer = Arrays.copyOf(listCustomer, totalCustomer + 1);
         listCustomer[totalCustomer] = new Customer(idCustomer,lastName,firstName,phone);
         totalCustomer ++;
-        writeData(true);
     }
 
     public String transIdCustomer(String phone) {
@@ -67,7 +65,6 @@ public class ListCustomer implements ServiceFile {
             for(Customer x : listCustomer) {
                 bufferedWriter.write(x.printToFile());
             }
-            resetData();
             bufferedWriter.close();
         }
         catch (FileNotFoundException fnfe) {
@@ -77,6 +74,8 @@ public class ListCustomer implements ServiceFile {
 
         }
     }
+
+
 
     @Override
     public void readData() {
@@ -103,9 +102,4 @@ public class ListCustomer implements ServiceFile {
         }
     }
 
-    @Override
-    public void resetData() {
-        totalCustomer = 0;
-        listCustomer = new Customer[totalCustomer];
-    }
 }

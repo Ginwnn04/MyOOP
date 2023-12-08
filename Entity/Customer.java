@@ -1,6 +1,8 @@
 package DoAnOOP.Entity;
 
 public class Customer {
+
+
     private String idCustomer;
     private String lastName;
     private String firstName;

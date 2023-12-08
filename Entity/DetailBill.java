@@ -69,7 +69,7 @@ public class DetailBill {
         this.total=total;
     }
 
-    //Hàm xuất
+    //Hàm xuất.
     public void print(){
         int colSpace = 15;
         System.out.printf("%-" + colSpace + "s %-"

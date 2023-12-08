@@ -29,11 +29,9 @@ public class ListBillImport implements ServiceFile {
         }
         listBill = Arrays.copyOf(listBill, totalBill + 1);
         listBill[totalBill++] = billImport;
-        writeData(true);
     }
 
     public void show() {
-        readData();
         int colSpace = 25;
         System.out.printf("%-" + colSpace + "s %-"
                 + colSpace + "s %-"
@@ -44,9 +42,13 @@ public class ListBillImport implements ServiceFile {
         for (BillImport x : listBill) {
             x.printBill();
         }
-        resetData();
     }
 
+
+    public void createBill(....) {
+        // tang size mang bill hien len tai len 1
+        // goi 1 ham tao bill cua class Bill
+    }
 
     @Override
     public void readData() {
@@ -97,11 +99,6 @@ public class ListBillImport implements ServiceFile {
         }
     }
 
-    @Override
-    public void resetData() {
-        totalBill = 0;
-        listBill = new BillImport[totalBill];
-    }
 
     @Override
     public void writeData(boolean flag) {
@@ -111,7 +108,6 @@ public class ListBillImport implements ServiceFile {
             for(BillImport x : listBill) {
                 bufferedWriter.write(x.printToFile());
             }
-            resetData();
             bufferedWriter.close();
         }
         catch (FileNotFoundException fnfe) {

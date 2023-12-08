@@ -1,21 +1,26 @@
 package DoAnOOP.Entity;
+
 import DoAnOOP.Manager.Validate;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 public class PromotionsSale {
     private String namePromotions;
     private String idPromotions;
-    private String startDate;
-    private String endDate;
+    private Date startDate;
+    private Date endDate;
     private int totalVoucher=0;
     private Voucher[] voucher= new Voucher[totalVoucher];
+    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 
     //Constructor
     public PromotionsSale() {
     }
 
-    public PromotionsSale(String namePromotions, String idPromotions, String startDate, String endDate) {
+    public PromotionsSale(String namePromotions, String idPromotions, Date startDate, Date endDate) {
         this.namePromotions = namePromotions;
         this.idPromotions = idPromotions;
         this.startDate = startDate;
@@ -25,6 +30,10 @@ public class PromotionsSale {
     //Getter & Setter
     public String getnamePromotions(){
         return namePromotions;
+    }
+
+    public int getTotalVoucher() {
+        return totalVoucher;
     }
 
     public void setnamePromotions(String namePromotions){
@@ -39,19 +48,19 @@ public class PromotionsSale {
         this.idPromotions=idPromotions;
     }
 
-    public String getstartDate(){
+    public Date getstartDate(){
         return startDate;
     }
 
-    public void setstartDate(String startDate){
+    public void setstartDate(Date startDate){
         this.startDate=startDate;
     }
 
-    public String getendDate(){
+    public Date getendDate(){
         return endDate;
     }
 
-    public void setendDate(String endDate){
+    public void setendDate(Date endDate){
         this.endDate=endDate;
     }
 
@@ -61,12 +70,52 @@ public class PromotionsSale {
         return idPromotions;
     }
 
+    //Hàm kiểm tra ngày
+    public boolean CheckDate(String date) {
+		df.setLenient(false);
+		try {
+			df.parse(date);
+		}catch(ParseException e) {
+			return false;
+		}
+		return true;
+	}
+	
+
     //Hàm nhập
     public void input(){
+        boolean validDate = false;
         idPromotions = createIdPromotions();
+        
+        //Nhập ngày bắt đầu
+        do {
+            String startDateStr = new Validate().checkStringUser("Nhập ngày bắt đầu (dd-MM-yyyy)");
+            try {
+                startDate = df.parse(startDateStr);
+                validDate = true;
+            } catch (ParseException e) { 
+                System.out.println("Định dạng ngày không hợp lệ!");
+            }
+        }while (!validDate);
+
+        //Nhập ngày kết thúc
+        do {
+            String endDateStr = new Validate().checkStringUser("Nhập ngày kết thúc (dd-MM-yyyy)");
+            try {
+                endDate = df.parse(endDateStr);
+                if (endDate.before(startDate)) {
+                System.out.println("Ngày kết thúc phải sau ngày bắt đầu!");
+                    validDate = false;
+                }
+                else{
+                    validDate = true;
+                }
+            } catch (ParseException e) { 
+                System.out.println("Định dạng ngày không hợp lệ!");
+            }
+        }while (!validDate);
+
         namePromotions = new Validate().checkStringUser("Nhập tên chương trình khuyến mãi");
-        startDate = new Validate().checkStringUser("Nhập ngày bắt đầu");
-        endDate = new Validate().checkStringUser("Nhập kết thúc");
         totalVoucher = new Validate().checkNumberInput("Số voucher cần tạo", "Số voucher > 0, vui long nhập lại !");
         voucher = new Voucher[totalVoucher];
             for(int i = 0 ; i < totalVoucher ; i++ ){
@@ -87,7 +136,7 @@ public class PromotionsSale {
 //        System.out.println("-------------------------------------------------");
         for(Voucher x : voucher){
             System.out.printf("%-" + colSpace + "s %-"
-                    + colSpace + "s %-" + colSpace + "s %-" + colSpace + "s ", idPromotions, namePromotions, startDate, endDate);
+                    + colSpace + "s %-" + colSpace + "s %-" + colSpace + "s ", idPromotions, namePromotions, df.format(startDate), df.format(endDate));
                 x.print();
         }
     }
@@ -162,6 +211,13 @@ public class PromotionsSale {
             result += namePromotions + "|" + idPromotions + "|" + startDate + "|" + endDate + "|" + x.printToFile();
         }
         return result;
+    }
+    public int getTotalMoney(){
+        int count = 0;
+        for (int i =0;i<totalVoucher;i++){
+            count += voucher[i].getmoneyDiscount();
+        }
+        return count;
     }
 
 }

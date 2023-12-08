@@ -21,7 +21,7 @@ public class Voucher {
         this.moneyDiscount=moneyDiscount;
     }
 
-    //Constructor
+    //Constructor.
     public Voucher(){}
 
     public Voucher(String idVoucher, int moneyDiscount){

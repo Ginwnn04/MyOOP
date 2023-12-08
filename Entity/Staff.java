@@ -17,14 +17,8 @@ public class Staff {
 
     public Staff(String fullName, String phone) {
         this.idStaff = generateId();
-        String[] name = fullName.split(" ");
-        if (name.length >= 2) {
-            this.lastName = name[0];
-            this.firstName = String.join(" ", Arrays.copyOfRange(name, 1, name.length));
-        } else {
-            this.lastName = fullName;
-            this.firstName = "";
-        }
+        this.lastName = fullName.substring(0, fullName.lastIndexOf(" "));
+        this.firstName = fullName.substring(fullName.lastIndexOf(" ") + 1);
         this.phone = phone;
     }
 
@@ -44,14 +38,8 @@ public class Staff {
     }
 
     public void setFullName(String fullName) {
-        String[] name = fullName.split(" ");
-        if (name.length >= 2) {
-            this.lastName = name[0];
-            this.firstName = String.join(" ", Arrays.copyOfRange(name, 1, name.length));
-        } else {
-            this.lastName = fullName;
-            this.firstName = "";
-        }
+        this.lastName = fullName.substring(0, fullName.lastIndexOf(" "));
+        this.firstName = fullName.substring(fullName.lastIndexOf(" ") + 1);
     }
 
     public void setPhone(String newPhone) {

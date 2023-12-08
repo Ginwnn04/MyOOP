@@ -21,8 +21,12 @@ public class ListStaff implements ServiceFile {
     }
 
     public void printStaff() {
+        int colSpace = 15;
         System.out.println("=======================DANH SÁCH NHÂN VIÊN======================");
-        System.out.format("%-15s %-15s %-15s %-15s \n", "Mã Nhân Viên", "Họ Nhân Viên", "Tên Nhân Viên", "Số điện thoại");
+        System.out.printf("%-" + colSpace + "s %-"
+                + colSpace + "s %-"
+                + colSpace + "s %-"
+                + colSpace + "s\n", "Mã Nhân Viên", "Họ Nhân Viên", "Tên Nhân Viên", "Số điện thoại");
         for (Staff staff : listStaff) {
             if(staff!=null)
             staff.showStaff();
@@ -161,9 +165,5 @@ public class ListStaff implements ServiceFile {
 
         }
     }
-    @Override
-    public void resetData(){
-        totalStaff = 0;
-        listStaff = new Staff[totalStaff];
-    }
+
 }

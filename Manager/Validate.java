@@ -1,15 +1,26 @@
 package DoAnOOP.Manager;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Validate {
     private static Scanner sc = new Scanner(System.in);
+    private SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 
     public void clearBuffer() {
         sc.nextLine();
     }
 
+    public Date inputDate(String notify, Date date){
+        try {
+            System.out.printf(notify + ": ");
+            date = df.parse(sc.nextLine());
+        } catch (Exception e) {
+        }
+        return date;
+    }
 
     public String checkStringUser(String notify) {
         System.out.printf(notify + ": ");
@@ -62,6 +73,4 @@ public class Validate {
             }
         }
     }
-
-
 }

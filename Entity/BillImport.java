@@ -1,5 +1,7 @@
 package DoAnOOP.Entity;
 
+import DoAnOOP.Manager.ListProduct;
+import DoAnOOP.Manager.ListStaff;
 import DoAnOOP.Manager.Validate;
 
 import java.util.Arrays;
@@ -62,6 +64,23 @@ public class BillImport {
         this.idSupplier = new Validate().checkStringUser("Nhập ID nhà cung cấp");
         this.idEmployee = new Validate().checkStringUser("Nhập ID nhân viên");
         this.importDate = new Validate().checkStringUser("Nhập ngày nhập hàng");
+    }
+
+    public void createBillImport(ListProduct listProduct, ListStaff listStaff) {
+        idSupplier = new Validate().checkStringUser("Nhập ID nhà cung cấp");
+        // check id co ton tai ko
+        idEmployee = new Validate().checkStringUser("Nhập ID nhân viên giám sát");
+        // kiem tra id co ton tai ko
+
+        // => Tao ra ngay nhap hien tai
+
+
+        // Hoi nhap tu file hay ban phim
+
+
+        // Nhập tu ban phim => tao cac bien nhu idProduct, nameProduct,... de lay data xong roi truyen tham so cho ham cua listProduct
+        // Neu nhap tu file =>
+
     }
 
     // Nhap du lieu tu ban phim

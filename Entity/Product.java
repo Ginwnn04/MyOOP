@@ -20,6 +20,7 @@ public abstract class Product {
 
     // Nhap du lieu tho
     public Product(int type, String nameProduct, String unit, int quantity, int price, int priceImport) {
+//        this.ID = generateIdProduct(type);
         this.ID = generateIdProduct(type);
         this.nameProduct = nameProduct;
         this.unit = unit;
@@ -30,6 +31,7 @@ public abstract class Product {
             this.isDelete = true;
         }
     }
+
     // Nhap du lieu co cau truc tu file
     public Product(String ID, String nameProduct, String unit, int quantity, int price, int priceImport, boolean isDelete) {
         this.ID = ID;
