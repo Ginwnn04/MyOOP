@@ -5,12 +5,17 @@ import DoAnOOP.Entity.Product;
 import DoAnOOP.Entity.ServiceFile;
 
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 public class ListBillImport implements ServiceFile {
     private BillImport[] listBill;
-    private int totalBill;
+    private int totalBill = 0;
     private String path = System.getProperty("user.dir") + "/src/DoAnOOP/PhieuNhap.txt";
+    private SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
 
     public ListBillImport() {
         listBill = new BillImport[totalBill];
@@ -21,6 +26,21 @@ public class ListBillImport implements ServiceFile {
         this.totalBill = list.totalBill;
     }
 
+
+    // Them bill khi them san pham moi
+    public void addBillImport(ListProduct listProduct, ListStaff listStaff, ListSupplier listSupplier, boolean flag) {
+        listBill = Arrays.copyOf(listBill, totalBill + 1);
+
+        listBill[totalBill] = new BillImport();
+        listBill[totalBill++].createBillImport(listProduct, listStaff, listSupplier, flag);
+    }
+    // Them bill khi bo sung them so luong cua san pham
+//    public void addBillImport(ListProduct listProduct, ListStaff listStaff) {
+//        listBill = Arrays.copyOf(listBill, totalBill + 1);
+//
+//        listBill[totalBill] = new BillImport();
+//        listBill[totalBill++].createBillImport(listProduct, listStaff);
+//    }
 
 
     public void creatBillImport(BillImport billImport) {
@@ -45,10 +65,6 @@ public class ListBillImport implements ServiceFile {
     }
 
 
-    public void createBill(....) {
-        // tang size mang bill hien len tai len 1
-        // goi 1 ham tao bill cua class Bill
-    }
 
     @Override
     public void readData() {
@@ -67,7 +83,13 @@ public class ListBillImport implements ServiceFile {
                 String unit = split[3];
                 int quantity = Integer.parseInt(split[4]);
                 int priceImport = Integer.parseInt(split[5]);
-                String importDate = split[6];
+                Date importDate = new Date();
+                try {
+                    importDate = df.parse(split[6]);
+                }
+                catch (ParseException pe) {
+
+                }
                 String idEmployee = split[7];
                 String idSupplier = split[8];
                 if (check) {

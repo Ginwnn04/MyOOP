@@ -19,55 +19,9 @@ public class ListProduct implements ServiceFile{
         this.totalProduct = x.totalProduct;
     }
 
-//    public void addProduct(int type) {
-//        // 1 la them sp tu file
-//        // 2 la them san pham tu ban phim
-//        ListBillImport listBillImport = new ListBillImport();
-//        BillImport billImport = new BillImport();
-//        if (type == 1) {
-//            billImport = importProductFormFile();
-//        }
-//        else if (type == 2) {
-//            billImport = importProduct();
-//        }
-//        if (billImport == null) {
-//            System.out.println("Thêm thất bại");
-//        }
-//        listBillImport.creatBillImport(billImport);
-//        listBillImport.writeData(true);
-//    }
-
-//    public BillImport importProduct() {
-//        BillImport billImport = new BillImport();
-//        billImport.insertInfor();
-//        String choice = "";
-//        do {
-//            System.out.println("====================THÊM SẢN PHẨM======================");
-//            Product product = createProduct();
-//            if (product != null) {
-//                listProduct = Arrays.copyOf(listProduct, totalProduct + 1);
-//                listProduct[totalProduct++] = product;
-//                billImport.insertDetail(product.getID(), product.getNameProduct(), product.getUnit(), product.getQuantity(), product.getPriceImport());
-//                System.out.println("Thêm thành công !");
-//            }
-//            else {
-//                System.out.printf("Thêm thất bại !");
-//            }
-//            new Validate().clearBuffer();
-//            choice = new Validate().checkStringUser("Bạn có muốn tiếp tục thêm sản phẩm không (y/n)");
-//
-//        } while (choice.charAt(0) == 'y');
-//        billImport.printImportBill();
-//        return billImport;
-//    }
-
-
-    public BillImport importProductFormFile() {
-        BillImport billImport = new BillImport();
-        billImport.insertInfor();
-        String currentDirectory = System.getProperty("user.dir");
-        String path = currentDirectory + "/src/DoAnOOP/NhaCungCap.txt";
+    public DetailsImport[] createProduct(String path) {
         int count = 0;
+        DetailsImport[] listDetailsImport = new DetailsImport[count];
         try {
             FileReader fileReader = new FileReader(path);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -92,17 +46,16 @@ public class ListProduct implements ServiceFile{
                             int volume = Integer.parseInt(split[5]);
                             listProduct[totalProduct++] = new Drinks(type, nameProduct, unit, quantity, priceProduct, volume, priceImport);
                         }
-                        count++;
                         Product product = listProduct[totalProduct - 1];
-                        billImport.insertDetail(product.getID(), product.getNameProduct(), product.getUnit(), product.getQuantity(), priceImport);
+                        listDetailsImport = Arrays.copyOf(listDetailsImport, count + 1);
+                        listDetailsImport[count++] = new DetailsImport(product.getID(), product.getNameProduct(), product.getUnit(), product.getQuantity(), priceImport);
                     }
                 }
             }
             System.out.println("Đã thêm thành công " + count + " sản phẩm");
             new Validate().clearBuffer();
-            billImport.printImportBill();
             bufferedReader.close();
-            return billImport;
+            return listDetailsImport;
         }
         catch (FileNotFoundException fnfe) {
 
@@ -130,10 +83,10 @@ public class ListProduct implements ServiceFile{
         if (type == 1) {
             new Validate().clearBuffer();
             String typeFood = new Validate().checkStringUser("Nhập loại thực phẩm");
-            int amout = new Validate().checkNumberInput("Nhập khối lượng thực phẩm", "Khối lượng > 0, vui lòng nhập lại");
-            if (amout != -1) {
+            int amount = new Validate().checkNumberInput("Nhập khối lượng thực phẩm", "Khối lượng > 0, vui lòng nhập lại");
+            if (amount != -1) {
                 listProduct = Arrays.copyOf(listProduct, totalProduct + 1);
-                listProduct[totalProduct++] = new Foods(type, nameProduct, unit, quantity, priceProduct, typeFood, amout, priceImport);
+                listProduct[totalProduct++] = new Foods(type, nameProduct, unit, quantity, priceProduct, typeFood, amount, priceImport);
                 return new DetailsImport(listProduct[totalProduct - 1].getID(), nameProduct, unit, quantity, priceImport);
             }
         }
@@ -147,28 +100,53 @@ public class ListProduct implements ServiceFile{
         return null;
     }
 
-//    public void updateProduct() {
-//        showProduct(false);
-//        boolean flag = false;
-//        String idProductUser = new Validate().checkStringUser("Nhập vào ID sản phẩm cần sửa");
-//        for(int i = 0; i < totalProduct; i++) {
-//            if (listProduct[i].getID().equals(idProductUser)) {
-//                flag = true;
-//                Product tmp =  createProduct();
-//                if (tmp != null) {
-//                    listProduct[i] = tmp;
-//                    System.out.println("Sửa thành công !!");
-//                    break;
-//                }
-//            }
-//        }
-//        if (flag == false) {
-//            System.out.println("Không tìm thấy ID");
-//            System.out.println("Sửa thất bại");
-//        }
-//
-//
-//    }
+    public void updateProduct() {
+        showProduct(false);
+        boolean flag = false;
+        String idProductUser = new Validate().checkStringUser("Nhập vào ID sản phẩm cần sửa");
+        for(int i = 0; i < totalProduct; i++) {
+            if (listProduct[i].getID().equals(idProductUser)) {
+                flag = true;
+
+                //
+                String idProduct = listProduct[i].getID();
+                String nameProduct = new Validate().checkStringUser("Nhập tên sản phẩm");
+                String unit = new Validate().checkStringUser("Nhập đơn vị tính của sản phẩm");
+                int quantity = new Validate().checkNumberInput("Nhập số lượng sản phẩm", "Số lượng > 0, vui lòng nhập lại");
+                new Validate().clearBuffer();
+                int priceImport = new Validate().checkNumberInput("Nhập giá tiền nhập sản phẩm", "Giá bán > 0, vui lòng nhập lại");
+                int priceProduct = new Validate().checkNumberInput("Nhập giá tiền bán sản phẩm", "Giá nhập > 0, vui lòng nhập lại");
+                if (quantity == -1 || priceProduct == -1) {
+                    System.out.printf("Bạn đã nhập sai");
+                    return;
+                }
+                new Validate().clearBuffer();
+
+                if (listProduct[i] instanceof Foods) {
+                    String typeFood = new Validate().checkStringUser("Nhập loại thực phẩm");
+                    int amount = new Validate().checkNumberInput("Nhập khối lượng thực phẩm", "Khối lượng > 0, vui lòng nhập lại");
+                    if (amount != -1) {
+                        listProduct[i] = new Foods(idProduct, nameProduct, unit, quantity, priceProduct, false, typeFood, amount, priceImport);
+                        System.out.println("Sửa thành công");
+                        return;
+                    }
+                }
+                if (listProduct[i] instanceof Drinks) {
+                    int volume = new Validate().checkNumberInput("Nhập thể tích", "Thể tích > 0, vui lòng nhập lại");
+                    if (volume != -1) {
+                        listProduct[i] = new Drinks(idProduct, nameProduct, unit, quantity, priceProduct, false, volume, priceImport);
+                        System.out.println("Sửa thành công");
+                        return;
+                    }
+                }
+                System.out.println("Sửa thất bại");
+            }
+        }
+        if (flag == false) {
+            System.out.println("Không tìm thấy ID");
+            System.out.println("Sửa thất bại");
+        }
+    }
 
     public void deleteProduct() {
         showProduct(false);
@@ -188,81 +166,47 @@ public class ListProduct implements ServiceFile{
         }
     }
 
-    public void restock() {
-        BillImport billImport = new BillImport();
-        billImport.insertInfor();
-        showProduct(true);
-        String idProductUser = new Validate().checkStringUser("Nhập ID sản phẩm cần khôi phục HOẶC thêm số lượng");
-        boolean flag = false;
-        for(int i = 0; i < totalProduct; i++) {
-            if (listProduct[i].getID().equals(idProductUser)) {
-                // So luong > 0 => Can khoi phuc
-                if (listProduct[i].getQuantity() > 0) {
-                    listProduct[i].setDelete(false);
-                    flag = true;
-                    System.out.println("Khôi phục thành công!");
-                    break;
-                }
-                // Nguoc lai => So luong = 0 => Can them so luong
-                else {
+    public DetailsImport[] restock() {
+        int totalDetailsImport = 0;
+        DetailsImport[] listDetailsImports = new DetailsImport[totalDetailsImport];
+        System.out.println("1. Thêm số lượng sản phẩm ");
+        System.out.println("2. Thêm số lượng sản phẩm đã hết");
+        int choice = new Validate().checkChoiceUser(1, 2);
+        boolean mode = true;
+        if (choice == 1) {
+            mode = false;
+        }
+        String choiceContinue = "";
+        do {
+            showProduct(mode);
+            String idProductUser = new Validate().checkStringUser("Nhập ID sản phẩm cần thêm số lượng");
+            boolean flag = false;
+            for(int i = 0; i < totalProduct; i++) {
+                if (listProduct[i].getID().equals(idProductUser)) {
                     int newQuantity = new Validate().checkNumberInput("Nhập số lượng sản phẩm cần thêm", "Số lượng > 0, vui lòng nhập lại");
                     if (newQuantity != -1) {
                         flag = true;
-                        listProduct[i].setQuantity(newQuantity);
-                        listProduct[i].setDelete(false);
-                        billImport.insertDetail(listProduct[i].getID(), listProduct[i].getNameProduct(), listProduct[i].getUnit(), newQuantity, listProduct[i].getPriceImport());
+                        int quantityCurrent = listProduct[i].getQuantity();
+                        listProduct[i].setQuantity(quantityCurrent + newQuantity);
+                        if (listProduct[i].getIsDelete() == true) {
+                            listProduct[i].setDelete(false);
+                        }
+                        listDetailsImports = Arrays.copyOf(listDetailsImports, totalDetailsImport + 1);
+                        listDetailsImports[totalDetailsImport++] = new DetailsImport(listProduct[i].getID(), listProduct[i].getNameProduct(), listProduct[i].getUnit(), newQuantity, listProduct[i].getPriceImport());
                         System.out.println("Thêm số lượng thành công");
                         new Validate().clearBuffer();
                         break;
                     }
                 }
             }
-
-        }
-        if (flag == false) {
-            System.out.println("Không tìm thấy ID sản phẩm HOẶC số lượng sản phẩm ko hợp lệ");
-            System.out.println("Thêm số lượng HOẶC khôi phục thất bại");
-        }
-        billImport.printImportBill();
-        ListBillImport listBillImport = new ListBillImport();
-        listBillImport.creatBillImport(billImport);
-    }
-
-    public void restock1() {
-        BillImport billImport = new BillImport();
-        billImport.insertInfor();
-        String choice;
-        do {
-            showProduct(false);
-            boolean flag = true;
-            String idProductUser = new Validate().checkStringUser("Nhập ID sản cần thêm số lượng");
-            for(int i = 0; i < totalProduct; i++) {
-                if (listProduct[i].getID().equals(idProductUser)) {
-                    int newQuantity = new Validate().checkNumberInput("Nhập số lượng sản phẩm cần thêm", "Số lượng > 0, vui lòng nhập lại");
-                    if (newQuantity != -1) {
-                        int quantityCurrent = listProduct[i].getQuantity();
-                        listProduct[i].setQuantity(quantityCurrent + newQuantity);
-                        billImport.insertDetail(listProduct[i].getID(), listProduct[i].getNameProduct(), listProduct[i].getUnit(), newQuantity, listProduct[i].getPriceImport());
-                        System.out.println("Thêm số lượng thành công");
-                    }
-                    else {
-                        System.out.println("Số lượng cần thêm không hợp lệ");
-                        flag = false;
-                    }
-                    break;
-                }
-            }
             if (flag == false) {
+                System.out.println("Không tìm thấy ID sản phẩm");
                 System.out.println("Thêm số lượng thất bại");
             }
-            new Validate().clearBuffer();
+            choiceContinue = new Validate().checkStringUser("Bạn có muốn tiếp tục (y/n)");
 
-            choice = new Validate().checkStringUser("Bạn có muốn tiếp tục thêm sản phẩm không (y/n)");
-        } while(choice.charAt(0) == 'y');
-        billImport.printImportBill();
-        ListBillImport listBillImport = new ListBillImport();
-        listBillImport.creatBillImport(billImport);
-
+        } while(choiceContinue.charAt(0) == 'y');
+        return listDetailsImports;
     }
 
     // Can fix lai

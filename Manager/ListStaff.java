@@ -33,13 +33,13 @@ public class ListStaff implements ServiceFile {
         }
     }
 
-    public Staff findStaff(String idFix) {
-        for (Staff staffCurrent : listStaff) {
-            if (staffCurrent != null && staffCurrent.getIdStaff().equals(idFix)) {
-                return staffCurrent;
+    public boolean checkExists(String idEmployee) {
+        for(Staff x : listStaff) {
+            if (x.getIdStaff().equals(idEmployee)) {
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     @Override
@@ -83,87 +83,87 @@ public class ListStaff implements ServiceFile {
 
         }
     }
-    public void fixData() {
-        try {
-            FileWriter fileWriter = new FileWriter(path);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            System.out.println("=====================THAY ĐỔI THÔNG TIN NHÂN VIÊN========================");
-            String idToFix = new Validate().checkStringUser("Nhập ID nhân viên cần thay đổi");
-            Staff fixStaff = findStaff(idToFix);
-            if (fixStaff != null) {
-                System.out.println("Thông tin nhân viên cần sửa:");
-                System.out.format("%-15s %-15s %-15s %-15s \n", "Mã Nhân Viên", "Họ Nhân Viên", "Tên Nhân Viên", "Số điện thoại");
-                fixStaff.showStaff();
-                System.out.println("Thông tin nhân viên muốn thay đổi là:");
-                System.out.println("1. Họ và tên");
-                System.out.println("2. Số điện thoại");
-                System.out.println("3. Cả 2");
-                int x = new Validate().checkChoiceUser(1, 3);
-                switch (x) {
-                    case 1:
-                        String newName = new Validate().checkStringUser("Nhập họ và tên mới");
-                        fixStaff.setFullName(newName);
-                        break;
-                    case 2:
-                        String newPhone = new Validate().checkStringUser("Nhập số điện thoại mới");
-                        fixStaff.setPhone(newPhone);
-                        break;
-                    case 3:
-                        String Name = new Validate().checkStringUser("Nhập họ và tên mới");
-                        String Phone = new Validate().checkStringUser("Nhập số điện thoại mới");
-                        fixStaff.setFullName(Name);
-                        fixStaff.setPhone(Phone);
-                        break;
-                }
-                for (int i = 0; i < totalStaff; i++) {
-                    if (listStaff[i].getIdStaff().equals(fixStaff.getIdStaff())) {
-                        bufferedWriter.write(listStaff[i].printToFile());
-                    } else {
-                        bufferedWriter.write(listStaff[i].printToFile());
-                    }
-                }
-                System.out.println("Đã thay đổi thông tin thành công");
-            } else {
-                System.out.println("Không tìm thấy nhân viên có mã " + idToFix);
-                for (int i = 0; i < totalStaff; i++) {
-                    bufferedWriter.write(listStaff[i].printToFile());
-                }
-            }
-            bufferedWriter.close();
-            fileWriter.close();
-        } catch (FileNotFoundException fnfe) {
-            fnfe.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    public void deleteData() {
-        try {
-            FileWriter fileWriter = new FileWriter(path);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            System.out.println("=====================XÓA NHÂN VIÊN========================");
-            String idDelete = new Validate().checkStringUser("Nhập mã nhân viên cần xóa");
-            Staff deleteStaff = findStaff(idDelete);
-            if (deleteStaff != null) {
-                for (int i = 0; i < totalStaff; i++) {
-                    if (!listStaff[i].getIdStaff().equals(deleteStaff.getIdStaff())) {
-                        bufferedWriter.write(listStaff[i].printToFile());
-                    }
-                }
-                System.out.println("Đã xóa thành công nhân viên có mã " + idDelete);
-            } else {
-                for (int i = 0; i < totalStaff; i++) {
-                    bufferedWriter.write(listStaff[i].printToFile());
-                }
-                System.out.println("Không tìm thấy nhân viên có mã " + idDelete);
-            }
-            bufferedWriter.close();
-            fileWriter.close();
-        } catch (FileNotFoundException fnfe) {
-
-        } catch (IOException ioe) {
-
-        }
-    }
+//    public void fixData() {
+//        try {
+//            FileWriter fileWriter = new FileWriter(path);
+//            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+//            System.out.println("=====================THAY ĐỔI THÔNG TIN NHÂN VIÊN========================");
+//            String idToFix = new Validate().checkStringUser("Nhập ID nhân viên cần thay đổi");
+//            Staff fixStaff = findStaff(idToFix);
+//            if (fixStaff != null) {
+//                System.out.println("Thông tin nhân viên cần sửa:");
+//                System.out.format("%-15s %-15s %-15s %-15s \n", "Mã Nhân Viên", "Họ Nhân Viên", "Tên Nhân Viên", "Số điện thoại");
+//                fixStaff.showStaff();
+//                System.out.println("Thông tin nhân viên muốn thay đổi là:");
+//                System.out.println("1. Họ và tên");
+//                System.out.println("2. Số điện thoại");
+//                System.out.println("3. Cả 2");
+//                int x = new Validate().checkChoiceUser(1, 3);
+//                switch (x) {
+//                    case 1:
+//                        String newName = new Validate().checkStringUser("Nhập họ và tên mới");
+//                        fixStaff.setFullName(newName);
+//                        break;
+//                    case 2:
+//                        String newPhone = new Validate().checkStringUser("Nhập số điện thoại mới");
+//                        fixStaff.setPhone(newPhone);
+//                        break;
+//                    case 3:
+//                        String Name = new Validate().checkStringUser("Nhập họ và tên mới");
+//                        String Phone = new Validate().checkStringUser("Nhập số điện thoại mới");
+//                        fixStaff.setFullName(Name);
+//                        fixStaff.setPhone(Phone);
+//                        break;
+//                }
+//                for (int i = 0; i < totalStaff; i++) {
+//                    if (listStaff[i].getIdStaff().equals(fixStaff.getIdStaff())) {
+//                        bufferedWriter.write(listStaff[i].printToFile());
+//                    } else {
+//                        bufferedWriter.write(listStaff[i].printToFile());
+//                    }
+//                }
+//                System.out.println("Đã thay đổi thông tin thành công");
+//            } else {
+//                System.out.println("Không tìm thấy nhân viên có mã " + idToFix);
+//                for (int i = 0; i < totalStaff; i++) {
+//                    bufferedWriter.write(listStaff[i].printToFile());
+//                }
+//            }
+//            bufferedWriter.close();
+//            fileWriter.close();
+//        } catch (FileNotFoundException fnfe) {
+//            fnfe.printStackTrace();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//    public void deleteData() {
+//        try {
+//            FileWriter fileWriter = new FileWriter(path);
+//            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+//            System.out.println("=====================XÓA NHÂN VIÊN========================");
+//            String idDelete = new Validate().checkStringUser("Nhập mã nhân viên cần xóa");
+//            Staff deleteStaff = findStaff(idDelete);
+//            if (deleteStaff != null) {
+//                for (int i = 0; i < totalStaff; i++) {
+//                    if (!listStaff[i].getIdStaff().equals(deleteStaff.getIdStaff())) {
+//                        bufferedWriter.write(listStaff[i].printToFile());
+//                    }
+//                }
+//                System.out.println("Đã xóa thành công nhân viên có mã " + idDelete);
+//            } else {
+//                for (int i = 0; i < totalStaff; i++) {
+//                    bufferedWriter.write(listStaff[i].printToFile());
+//                }
+//                System.out.println("Không tìm thấy nhân viên có mã " + idDelete);
+//            }
+//            bufferedWriter.close();
+//            fileWriter.close();
+//        } catch (FileNotFoundException fnfe) {
+//
+//        } catch (IOException ioe) {
+//
+//        }
+//    }
 
 }

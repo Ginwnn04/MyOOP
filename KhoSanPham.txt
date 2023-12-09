@@ -1,6 +1,5 @@
-DK-54505448|C2 Trà Đào|Chai|0|7000|9000|true|330
-FD-55829814|Thịt heo|Kg|31|150000|170000|false|Gia súc|333
-FD-85573343|Trứng gà|Vỉ|11|23000|25000|false|Gia cầm|10
-DK-39537939|Sting dâu|Chai|34|9000|11000|false|500
-DK-27836091|Trà xanh|Chai|0|9000|10000|true|330
-FD-87336078|Com ga|Dia|3|50000|55000|true|Thuc an|3
+DK-89065292|C2 Trà Đào|Chai|7|7000|9000|false|330
+FD-57167561|Thịt heo|Kg|31|150000|170000|false|Gia súc|333
+FD-70203910|Trứng gà|Vỉ|7|23000|25000|false|Gia cầm|10
+DK-64782162|Sting dâu|Chai|30|9000|10000|false|500
+DK-39795894|Trà xanh|Chai|7|9000|10000|false|330

@@ -7,7 +7,7 @@ public class Menu {
     private ListBill listBill = new ListBill();
     private ListCustomer listCustomer = new ListCustomer();
     private ListStaff listStaff = new ListStaff();
-
+    private ListSupplier listSupplier = new ListSupplier();
     public Menu() {
         listProduct.readData();
         listPromotionsSale.readData();
@@ -15,117 +15,66 @@ public class Menu {
         listBillImport.readData();
         listCustomer.readData();
         listStaff.readData();
+        listSupplier.readData();
     }
     public void printMenuEmployee() {
         int choice;
         do {
             System.out.println("==================QUẢN LÝ CỬA HÀNG=====================");
+            System.out.println("0. Dừng chương trình.");
             System.out.println("1. Thêm sản phẩm.");
-            System.out.println("2. Hiển thị danh sách.");
-            System.out.println("3. Sửa thông tin sản phẩm");
-            System.out.println("4. Tìm kiếm tin sản phẩm");
-            System.out.println("5. Xoá sản phẩm");
-            System.out.println("6. Thống kê.");
-            System.out.println("7. Chương trình khuyến mãi");
-            System.out.println("8. Tạo hoá đơn.");
-            System.out.println("9. Dừng chương trình.");
-            choice = new Validate().checkChoiceUser(1, 9);
+            System.out.println("2. Thêm số lượng sản phẩm.");
+            System.out.println("3. Hiển thị danh sách.");
+            System.out.println("4. Sửa thông tin sản phẩm");
+            System.out.println("5. Tìm kiếm tin sản phẩm");
+            System.out.println("6. Xoá sản phẩm");
+            System.out.println("7. Thống kê.");
+            System.out.println("8. Chương trình khuyến mãi");
+            System.out.println("9. Tạo hoá đơn.");
+            choice = new Validate().checkChoiceUser(0, 9);
             switch (choice) {
                 case 1:
-                    addNewProductMenu();
+                    // Them san pham
+                    listBillImport.addBillImport(listProduct, listStaff, listSupplier, true);
                     break;
                 case 2:
-                    showSubMenu();
+                    // Them so luong san pham
+                    listBillImport.addBillImport(listProduct, listStaff, listSupplier, false);
+
                     break;
                 case 3:
-                    listProduct.updateProduct();
+                    showSubMenu();
                     break;
                 case 4:
-                    SubMenufind();
+                    listProduct.updateProduct();
                     break;
                 case 5:
-                    listProduct.deleteProduct();
+                    SubMenufind();
                     break;
                 case 6:
-                    reportMenu();
+                    listProduct.deleteProduct();
                     break;
                 case 7:
+                    reportMenu();
+                    break;
+                case 8:
                     // Chuong trinh khuyen mai
                     promotionsSaleMenu();
                     break;
-                case 8:
+                case 9:
                     billMenu();
                     break;
             }
-        } while(choice != 9);
+        } while(choice != 0);
         listProduct.writeData(false);
         listPromotionsSale.writeData(false);
         listBill.writeData(false);
         listBillImport.writeData(false);
         listCustomer.writeData(false);
         listStaff.writeData(false);
+        listSupplier.writeData(false);
     }
 
-    public void subMenuAdd() {
-        int choice;
-        do {
-            System.out.println("=====================THÊM MỚI SẢN PHẨM========================");
-            System.out.println("1. Thêm sản phẩm từ file.");
-            System.out.println("2. Thêm sản phẩm từ bàn phím.");
-            System.out.println("3. Quay lại.");
-            choice = new Validate().checkChoiceUser(1,3);
-            switch (choice) {
-                case 1:
-                    // listBillImport.creatBill(listProduct, listStaff, list NCC)
-                    listProduct.addProduct(1);
-                    break;
-                case 2:
-                    listProduct.addProduct(2);
-                    break;
-            }
-
-        } while(choice != 3);
-    }
-
-    public void subMenuRestock() {
-        int choice;
-        do {
-            System.out.println("=====================THÊM MỚI SẢN PHẨM========================");
-            System.out.println("1. Thêm số lượng sản phẩm.");
-            System.out.println("2. Thêm số lượng sản phẩm đã hết HOẶC khôi phục sản phẩm đã xóa");
-            System.out.println("3. Quay lại.");
-            choice = new Validate().checkChoiceUser(1,3);
-            switch (choice) {
-                case 1:
-                    listProduct.restock1();
-                    break;
-                case 2:
-                    listProduct.restock();
-                    break;
-            }
-
-        } while(choice != 3);
-    }
-
-    public void addNewProductMenu() {
-        int choice;
-        do {
-            System.out.println("=====================THÊM SẢN PHẨM========================");
-            System.out.println("1. Thêm mới sản phẩm.");
-            System.out.println("2. Thêm số lượng sản phẩm.");
-            System.out.println("3. Quay lại.");
-            choice = new Validate().checkChoiceUser(1,3);
-            switch (choice) {
-                case 1:
-                    subMenuAdd();
-                    break;
-                case 2:
-                    subMenuRestock();
-                    break;
-            }
-
-        } while(choice != 3);
-    }
 
     public void promotionsSaleMenu() {
         int choice;

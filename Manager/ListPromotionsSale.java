@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -160,7 +161,8 @@ public class ListPromotionsSale implements ServiceFile {
     }
 
     //Hàm lấy giá trị tiền giảm
-    public int transMoneyDiscount(String idPromotions, String idVoucher, Date printDate) {
+    public int transMoneyDiscount(String idPromotions, String idVoucher, Date printDate)  {
+
         int count = 0;
         for (int i = 0; i < totalPromotionsSale; i++) {
             if (idPromotions.equals(listPromotionsSale[i].getidPromotions())) {

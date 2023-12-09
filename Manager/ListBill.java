@@ -15,7 +15,7 @@ public class ListBill implements ServiceFile {
     private static final Date printDateUserStr = null;
     private int totalBill;
     private Bill[] bill;
-    private SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+    private SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     private String path = System.getProperty("user.dir") + "/src/DoAnOOP/HoaDon.txt";
 
 

@@ -54,7 +54,7 @@ public class ListCustomer implements ServiceFile {
 				return listCustomer[i].getidCustomer();
 			}
 		}
-        return null;
+        return "";
 	}
 
     @Override
