@@ -132,7 +132,7 @@ public class Bill {
         //Nhập mã sản phẩm và kiểm tra với từng mã sản phẩm trong kho
         do {
             listProduct.showProduct(false);
-            System.out.println("Chi tiet thu " + (totalDetailBill + 1));
+            System.out.println("Chi tiết thứ " + (totalDetailBill + 1));
             idProduct = new Validate().checkStringUser("Nhap ma san pham");
             if (listProduct.transPriceProduct(idProduct) == 0)
                 System.err.println("\nMã san pham mà bạn vừa nhập không hợp lệ hoặc không có trong danh sách!!!");

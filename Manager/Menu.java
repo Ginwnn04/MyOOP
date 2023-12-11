@@ -175,13 +175,21 @@ public class Menu {
             System.out.println("0. Quay lại");
             System.out.println("1. Tìm sản phẩm theo mã  phẩm");
             System.out.println("2. Tìm sản phẩm theo tên sản phẩm");
-            choice = new Validate().checkChoiceUser(0, 2);
+            System.out.println("3. Tìm sản phẩm theo mức giá");
+            System.out.println("4. Tìm sản phẩm theo loại và giá");
+            choice = new Validate().checkChoiceUser(0, 4);
             switch (choice) {
                 case 1:
                     listProduct.findIdProduct();
                     break;
                 case 2:
                     listProduct.findNameProduct();
+                    break;
+                case 3:
+                    listProduct.findProductByPrice();
+                    break;
+                case 4:
+                    listProduct.findProductByTypeProductNPrice();
                     break;
             }
         }while(choice != 0);

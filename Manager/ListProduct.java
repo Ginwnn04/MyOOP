@@ -204,7 +204,7 @@ public class ListProduct implements ServiceFile{
         return listDetailsImports;
     }
 
-    // Can fix lai
+
     public void findIdProduct(){
         boolean flag = false;
         String idProductUser = new Validate().checkStringUser("Nhập vào ID sản phẩm cần tìm");
@@ -238,6 +238,41 @@ public class ListProduct implements ServiceFile{
         }
     }
 
+    public void findProductByPrice() {
+        int min = new Validate().checkNumberInput("Nhập số tiền tối thiểu","Số tiền phải > 0");
+        int max = new Validate().checkNumberInput("Nhập số tiền tối đa","Số tiền phải > 0");
+        printFrame("DANH SÁCH TÌM KIẾM");
+        for(Product x : listProduct) {
+            if (x.getPrice() >= min && x.getPrice() <= max) {
+                x.print();
+            }
+        }
+    }
+
+    public void findProductByTypeProductNPrice() {
+        System.out.println("1. Thực phẩm");
+        System.out.println("2. Thức uống");
+        int choice = new Validate().checkChoiceUser(1, 2);
+        int min = new Validate().checkNumberInput("Nhập số tiền tối thiểu","Số tiền phải > 0");
+        int max = new Validate().checkNumberInput("Nhập số tiền tối đa","Số tiền phải > 0");
+        printFrame("DANH SÁCH TÌM KIẾM");
+        if (choice == 1) {
+            for(Product x : listProduct) {
+                if (x instanceof Foods && x.getPrice() >= min && x.getPrice() <= max) {
+                    x.print();
+                }
+            }
+        }
+        else {
+            for(Product x : listProduct) {
+                if (x instanceof Drinks && x.getPrice() >= min && x.getPrice() <= max) {
+                    x.print();
+                }
+            }
+        }
+
+    }
+
 
     public void printFrame(String title) {
         int colSpace = 15;
@@ -251,8 +286,6 @@ public class ListProduct implements ServiceFile{
                 + colSpace + "s %-"
                 + colSpace + "s\n", "Mã sản phẩm", "Tên sản phẩm", "Khối lượng", "Thể tích","Loại thực phẩm" , "Đơn vị tính", "Số lượng", "Giá tiền");
     }
-
-
 
     public void showProduct(boolean isDelete) {
         printFrame("DANH SÁCH SẢN PHẨM");
@@ -270,9 +303,6 @@ public class ListProduct implements ServiceFile{
         }
     }
 
-
-
-
     public void setQuantity(String idProduct, int newQuantity) {
         for(Product x : listProduct) {
             if (x.getID().equals(idProduct)) {
@@ -284,34 +314,33 @@ public class ListProduct implements ServiceFile{
         }
     }
 
-
+    // Get số tiền của sản phẩm dựa vào ID
     public int transPriceProduct(String idProduct) {
-//        readData();
 		for(int i = 0; i < totalProduct; i++) {
 			if((listProduct[i].getID()).equals(idProduct)) {
 				return listProduct[i].getPrice();
 			}
 		}
-//        resetData();
         return 0;
 	}
 
+    // Get số lượng của sản phẩm dựa vào ID
     public int transQuantityProduct(String idProduct) {
 		for(int i = 0; i < totalProduct; i++) {
-			if(listProduct[i].getID().indexOf(idProduct) != -1) {
+			if(listProduct[i].getID().equals(idProduct)) {
 				return listProduct[i].getQuantity();
 			}
 		}
         return 0;
 	}
-
+    // Get tên của sản phẩm dựa vào ID
     public String transNameProduct(String idProduct) {
 		for(int i = 0; i < totalProduct; i++) {
-			if(listProduct[i].getID().indexOf(idProduct) != -1) {
+			if(listProduct[i].getID().equals(idProduct)) {
 				return listProduct[i].getNameProduct();
 			}
 		}
-        return null;
+        return "";
 	}
 
 
