@@ -108,8 +108,10 @@ public class BillImport {
             return;
         }
         System.out.println("=====================================================================================");
-        System.out.printf("%" + 60 + "s", "BILL NHẬP HÀNG (" + idImportProduct + ")\n");
-        System.out.printf("%" + 25 + "s %" + 25 + "s %" + 25 + "s\n", "Mã NV: " + idEmployee, "Mã NCC: " + idSupplier, "Ngày: " + df.format(importDate));
+        System.out.printf("%" + 60 + "s", "HOÁ ĐƠN NHẬP HÀNG (" + idImportProduct + ")\n");
+        System.out.printf("%" + 35 + "s %" + 35 + "s\n", "Mã NV: " + idEmployee, "Mã NCC: " + idSupplier);
+        System.out.printf("%" + 60 + "s", "Ngày in hoá đơn: " + df.format(importDate) + "\n");
+        System.out.println("-----------------------------------------------------------------------------------");
         int colSpace = 15;
         System.out.printf("%-" + colSpace + "s %-"
                 + colSpace + "s %-"
@@ -120,12 +122,9 @@ public class BillImport {
         for(DetailsImport x : listDetailsImport) {
             x.printDetail();
         }
-        System.out.printf("%-" + colSpace + "s %-"
-                + colSpace + "s %-"
-                + colSpace + "s %-"
-                + colSpace + "s %-"
-                + colSpace + "s %-"
-                + colSpace + "d\n", "", "", "", "", "Tổng tiền", totalPriceImportProduct);
+        System.out.println("-----------------------------------------------------------------------------------");
+
+        System.out.println("Tổng tiền nhập hàng " + totalPriceImportProduct);
     }
 
     // Hien thi ra tung dong hoa don

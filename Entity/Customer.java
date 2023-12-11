@@ -1,8 +1,6 @@
 package DoAnOOP.Entity;
 
 public class Customer {
-
-
     private String idCustomer;
     private String lastName;
     private String firstName;
@@ -22,24 +20,6 @@ public class Customer {
         this.phone = phone;
     }
 
-    public String getphone(){
-        return phone;
-    }
-    public void setphone(String phone){
-        this.phone=phone;
-    }
-
-    public String getidCustomer(){
-        return idCustomer;
-    }
-    public void setidCustomer(String idCustomer){
-        this.idCustomer=idCustomer;
-    }
-
-    public String generateId() {
-        return "KH-" + (int)(Math.random() * 1000000);
-    }
-
     public void show() {
         int colSpace = 15;
         System.out.printf("%-" + colSpace + "s %-"
@@ -49,5 +29,17 @@ public class Customer {
     }
     public String printToFile() {
         return idCustomer + "|" + lastName + "|" +  firstName + "|" + phone + "\n";
+    }
+
+    public String getphone(){
+        return phone;
+    }
+
+    public String getidCustomer(){
+        return idCustomer;
+    }
+
+    public String generateId() {
+        return "KH-" + (int)(Math.random() * 1000000);
     }
 }

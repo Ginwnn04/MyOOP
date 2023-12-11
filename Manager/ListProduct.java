@@ -13,11 +13,6 @@ public class ListProduct implements ServiceFile{
     public ListProduct() {
         listProduct = new Product[totalProduct];
     }
-    // Copy list san pham
-    public ListProduct(ListProduct x) {
-        this.listProduct = x.listProduct;
-        this.totalProduct = x.totalProduct;
-    }
 
     public DetailsImport[] createProduct(String path) {
         int count = 0;
@@ -289,14 +284,6 @@ public class ListProduct implements ServiceFile{
         }
     }
 
-    public Product getProductByCode(String idProduct) {
-        for (Product product : listProduct) {
-            if (product != null && product.getID().equals(idProduct)) {
-                return product;
-            }
-        }
-        return null;
-    }
 
     public int transPriceProduct(String idProduct) {
 //        readData();

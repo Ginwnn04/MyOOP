@@ -18,8 +18,6 @@ public class Bill {
     private int totalBill;
     private int moneyDiscount;
     private int totalPay;
-
-
     private int totalDetailBill = 0;
     private DetailBill[] detailBill = new DetailBill[totalDetailBill];
 
@@ -37,20 +35,6 @@ public class Bill {
         this.totalPay = totalBill - moneyDiscount;
     }
 
-    //Getter & Setter
-    public String getidBill() {
-        return idBill;
-    }
-
-    public String getidEmployee() {
-        return idEmployee;
-    }
-
-    public String getidCustomer() {
-        return idCustomer;
-    }
-
-
     //Ham tao ma hoa don
     public String createIdBill() {
         String firtID = "HD";
@@ -58,10 +42,7 @@ public class Bill {
     }
 
     //Hàm nhập
-    public void input(ListProduct listProduct, ListStaff listStaff, ListCustomer listCustomer, ListPromotionsSale listPromotionsSale) {
-        String idVoucher;
-        String idPromotions;
-        String phone;
+    public void createBill(ListProduct listProduct, ListStaff listStaff, ListCustomer listCustomer, ListPromotionsSale listPromotionsSale) {
         printDate = new Date();
         idBill = createIdBill();
         idEmployee = new Validate().checkStringUser("Nhập mã nhân viên");
@@ -83,8 +64,8 @@ public class Bill {
         choice = new Validate().checkStringUser("Bạn có mã giảm giá không (y/n)");
         if (choice.charAt(0) == 'y') {
 
-            idPromotions = new Validate().checkStringUser("Nhập vào mã CTKM");
-            idVoucher = new Validate().checkStringUser("Nhap ma voucher");
+            String idPromotions = new Validate().checkStringUser("Nhập vào mã CTKM");
+            String idVoucher = new Validate().checkStringUser("Nhap ma voucher");
             moneyDiscount = listPromotionsSale.transMoneyDiscount(idPromotions, idVoucher, printDate);
             if (moneyDiscount == 0) {
                 System.out.println("Mã giảm giá bạn vừa nhập không hợp lệ !!!");
@@ -94,7 +75,7 @@ public class Bill {
         //Thong tin khach hang
         choice = new Validate().checkStringUser("Có phải là thanh viên (y/n)");
         if (choice.charAt(0) == 'y') {
-            phone = new Validate().checkStringUser("Nhập số điện thoại khách hàng (+84)");
+            String phone = new Validate().checkStringUser("Nhập số điện thoại khách hàng (+84)");
             listCustomer.readData();
             idCustomer = listCustomer.transIdCustomer(phone);
             if (idCustomer.equals("")) {
@@ -106,17 +87,16 @@ public class Bill {
                 idCustomer = listCustomer.createCustomer();
             }
         }
-        print();
+        printDetailsBill();
     }
 
-    //Hàm xuất
-    public void print() {
+    //Hàm xuất chi tiết hoá đơn
+    public void printDetailsBill() {
         int colSpace = 15;
-        System.out.println("\n============================ HÓA ĐƠN THANH TOÁN ========================\n");
-        System.out.println("Ngày in hóa đơn : " + df.format(printDate));
-        System.out.println("Mã hóa đơn : " + idBill);
-        System.out.println("Nhân viên : " + idEmployee);
-        System.out.println("khách hàng : " + idCustomer);
+        System.out.println("=====================================================================================");
+        System.out.printf("%" + 55 + "s", "HOÁ ĐƠN BÁN HÀNG (" + idBill + ")\n");
+        System.out.printf("%" + 30 + "s %" + 30 + "s\n", "Mã NV: " + idEmployee, "Mã khách hàng: " + idCustomer);
+        System.out.printf("%" + 60 + "s", "Ngày in hoá đơn: " + df.format(printDate) + "\n");
         System.out.println("-------------------------------------------------------------------------");
         System.out.printf("%-" + colSpace + "s %-"
                 + colSpace + "s %-"
@@ -128,8 +108,18 @@ public class Bill {
         }
         System.out.println("-------------------------------------------------------------------------");
         System.out.println("Tổng tiền : " + totalBill);
-        System.out.println("Tiền được giảm : " + moneyDiscount);
-        System.out.println("Tiền cần thanh toán : " + totalPay);
+        System.out.println("Tiền giảm : " + moneyDiscount);
+        System.out.println("Tiền cần phải trả : " + totalPay);
+    }
+
+    // Xuất tổng quan hoá đơn
+    public void printOverviewBill() {
+        int colSpace = 25;
+        System.out.printf("%-" + colSpace + "s %-"
+                + colSpace + "s %-"
+                + colSpace + "s %-"
+                + colSpace + "s %-"
+                + colSpace + "s\n", idBill, idEmployee, idCustomer, totalDetailBill, totalPay);
     }
 
     //Hàm mua thêm sản phẩm vào hóa đơn
@@ -164,51 +154,9 @@ public class Bill {
         detailBill[totalDetailBill] = new DetailBill(nameProduct, idProduct, price, quantity);
         totalDetailBill++;
 
-        totalBill += detailBill[totalDetailBill - 1].gettotal();
+        totalBill += detailBill[totalDetailBill - 1].getTotal();
         totalPay = totalBill - moneyDiscount;
 
-    }
-
-    //Hàm xóa bớt sản phẩm khỏi hóa đơn
-    public void deleteDetailBill() {
-        int count = 0;
-        String idProductUser = new Validate().checkStringUser("Nhập mã sản phẩm cần xóa ");
-        for (int i = 0; i < totalDetailBill; i++) {
-            if (idProductUser.equals((detailBill[i]).getidProduct())) {
-                totalBill -= detailBill[i].gettotal();
-                totalPay = totalBill - moneyDiscount;
-                totalDetailBill--;
-                for (int j = i; j < totalDetailBill; j++) {
-                    detailBill[j] = detailBill[j + 1];
-                }
-                count++;
-                System.out.println("Đã xóa sản phẩm ra khỏi hóa đơn !");
-            }
-        }
-        if (count == 0) {
-            System.out.println("Không tìm thấy sản phẩm !");
-        }
-    }
-
-    //Thây đổi số lượng sản phẩm trong hóa đơn
-    public void fixQuantityDetailBill() {
-        int count = 0;
-        String idProductUser = new Validate().checkStringUser("Nhap ma san pham can thay doi so luong");
-        int quantityUser = new Validate().checkNumberInput("Nhap so luong muon thay doi", "So phai > 0, moi nhap lai !");
-        for (int i = 0; i < totalDetailBill; i++) {
-            if (idProductUser.equals((detailBill[i]).getidProduct())) {
-                totalBill -= detailBill[i].gettotal();
-                detailBill[i].setquantity(quantityUser);
-                detailBill[i].settotal(quantityUser * (detailBill[i].getprice()));
-                totalBill += detailBill[i].gettotal();
-                totalPay = totalBill - moneyDiscount;
-                System.out.println("Thay doi so luong san pham thanh cong !");
-                count++;
-            }
-        }
-        if (count == 0) {
-            System.out.println("Khong tim thay sản phẩm !");
-        }
     }
 
     //Lưu sản phẩm từ File
@@ -225,5 +173,13 @@ public class Bill {
             result += idBill + "|" + df.format(printDate) + "|" + idEmployee + "|" + idCustomer + "|" + x.printToFile() + "|" + totalBill + "|" + moneyDiscount + "|" + totalPay + "\n";
         }
         return result;
+    }
+
+    //Getter & Setter
+    public String getidBill() {
+        return idBill;
+    }
+    public String getidCustomer() {
+        return idCustomer;
     }
 }

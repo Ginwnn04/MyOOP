@@ -62,6 +62,7 @@ public abstract class Product {
         return ID + "|" + nameProduct + "|" + unit + "|" + quantity + "|" + priceImport + "|" + price + "|" + isDelete + "|";
     }
 
+    // Getter & Setter
     public String getID() {
         return ID;
     }

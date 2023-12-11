@@ -21,35 +21,14 @@ public class ListBillImport implements ServiceFile {
         listBill = new BillImport[totalBill];
     }
 
-    public ListBillImport(ListBillImport list) {
-        this.listBill = list.listBill;
-        this.totalBill = list.totalBill;
-    }
-
 
     // Them bill khi them san pham moi
     public void addBillImport(ListProduct listProduct, ListStaff listStaff, ListSupplier listSupplier, boolean flag) {
         listBill = Arrays.copyOf(listBill, totalBill + 1);
-
         listBill[totalBill] = new BillImport();
         listBill[totalBill++].createBillImport(listProduct, listStaff, listSupplier, flag);
     }
-    // Them bill khi bo sung them so luong cua san pham
-//    public void addBillImport(ListProduct listProduct, ListStaff listStaff) {
-//        listBill = Arrays.copyOf(listBill, totalBill + 1);
-//
-//        listBill[totalBill] = new BillImport();
-//        listBill[totalBill++].createBillImport(listProduct, listStaff);
-//    }
 
-
-    public void creatBillImport(BillImport billImport) {
-        if (listBill == null) {
-            System.out.println("Tao dang null");
-        }
-        listBill = Arrays.copyOf(listBill, totalBill + 1);
-        listBill[totalBill++] = billImport;
-    }
 
     public void show() {
         int colSpace = 25;
@@ -63,8 +42,6 @@ public class ListBillImport implements ServiceFile {
             x.printBill();
         }
     }
-
-
 
     @Override
     public void readData() {
@@ -120,7 +97,6 @@ public class ListBillImport implements ServiceFile {
 
         }
     }
-
 
     @Override
     public void writeData(boolean flag) {

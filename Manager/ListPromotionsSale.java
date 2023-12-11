@@ -22,21 +22,6 @@ public class ListPromotionsSale implements ServiceFile {
         listPromotionsSale = new PromotionsSale[totalPromotionsSale];
     }
 
-    public ListPromotionsSale(ListPromotionsSale x) {
-        this.listPromotionsSale = x.listPromotionsSale;
-        this.totalPromotionsSale = x.totalPromotionsSale;
-    }
-
-    //Hàm nhập
-    public void input() {
-        totalPromotionsSale = new Validate().checkNumberInput("So CTKM can tao", "Sai");
-        new Validate().clearBuffer();
-        listPromotionsSale = new PromotionsSale[totalPromotionsSale];
-        for (int i = 0; i < totalPromotionsSale; i++) {
-            listPromotionsSale[i] = new PromotionsSale();
-            listPromotionsSale[i].input();
-        }
-    }
 
     //Hàm xuất
     public void print() {
@@ -57,7 +42,7 @@ public class ListPromotionsSale implements ServiceFile {
     public void addPromotionsSale() {
         listPromotionsSale = Arrays.copyOf(listPromotionsSale, totalPromotionsSale + 1);
         listPromotionsSale[totalPromotionsSale] = new PromotionsSale();
-        listPromotionsSale[totalPromotionsSale].input();
+        listPromotionsSale[totalPromotionsSale].createPromotionSale();
         totalPromotionsSale++;
         System.out.println("Them CTKM thanh cong !");
     }
@@ -235,9 +220,9 @@ public class ListPromotionsSale implements ServiceFile {
     // Thống kê mã khuyến mãi
     public void reportPromotion() {
         readData();
-        System.out.format("%-25s %-15s %-15s \n", "Tên chương trình", "Số lượng", "Tổng tiền");
+        System.out.format("%-25s %-15s %-15s \n", "Tên chương trình", "Số lượng", "Tổng tiền giảm");
         for (int i =0;i<totalPromotionsSale;i++){
-            System.out.format("%-20s %-15s %-15s \n", listPromotionsSale[i].getnamePromotions(), listPromotionsSale[i].getTotalVoucher(), listPromotionsSale[i].getTotalMoney());
+            System.out.format("%-20s %-15s %-15s \n", listPromotionsSale[i].getnamePromotions(), listPromotionsSale[i].getTotalVoucher(), listPromotionsSale[i].getTotalMoneyOfPromotionSale());
         }
         String choice = new Validate().checkStringUser("Bạn có muốn chi tiết mã khuyến mãi không yes/no (yes để xem hoặc no từ chối)");
         if (choice.equals("yes")) {

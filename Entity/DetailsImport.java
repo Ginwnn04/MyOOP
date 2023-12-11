@@ -54,7 +54,4 @@ public class DetailsImport {
         return totalPrice;
     }
 
-    public void setIdBillImport(String idBillImport) {
-        this.idBillImport = idBillImport;
-    }
 }

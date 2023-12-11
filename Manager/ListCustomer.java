@@ -42,11 +42,6 @@ public class ListCustomer implements ServiceFile {
         }
     }
 
-    public void insertCustomer(String idCustomer, String lastName, String firstName, String phone) {
-        listCustomer = Arrays.copyOf(listCustomer, totalCustomer + 1);
-        listCustomer[totalCustomer] = new Customer(idCustomer,lastName,firstName,phone);
-        totalCustomer ++;
-    }
 
     public String transIdCustomer(String phone) {
 		for(int i = 0; i < totalCustomer; i++) {
